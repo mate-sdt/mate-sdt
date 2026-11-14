@@ -43,6 +43,8 @@ const {
   checkStatus,
   analyzeContextEngineering,
   runHarnessGate,
+  resolveContainerRuntime,
+  saveContainerConfig,
 } = require('../src/cli/installer');
 
 const CLI_BIN = path.resolve(__dirname, '..', 'bin', 'mate-sdt.js');
@@ -201,6 +203,15 @@ describe('M.A.T.E. SDT Framework CLI, 9 Skills, 5 Workflows & Auditor Suite', ()
       assert.equal(status.auditResult.grade, 'A');
       assert.equal(status.specValidation.allValid, true);
       assert.equal(typeof status.k6Available, 'boolean');
+      assert.equal(typeof status.podmanAvailable, 'boolean');
+      assert.equal(typeof status.dockerAvailable, 'boolean');
+      assert.ok(['podman', 'docker', 'none'].includes(status.configuredContainerRuntime));
+      assert.ok(fs.existsSync(path.join(tmpDir, '.mate', 'config.json')));
+
+      saveContainerConfig(tmpDir, 'docker');
+      assert.equal(resolveContainerRuntime(tmpDir), 'docker');
+      saveContainerConfig(tmpDir, 'none');
+      assert.equal(resolveContainerRuntime(tmpDir), 'none');
     } finally {
       fs.rmSync(tmpDir, { recursive: true, force: true });
     }

@@ -44,12 +44,17 @@ This skill is responsible for **Pillar T (Threat & Trash)** of the M.A.T.E. Meth
       - Double-submit & webhook idempotency verification.
       - Boundary & payload fuzzing (`SQLi`, `XSS`, negative numbers, Unicode overflow, malformed JSON).
       - *(Optional)* If the frontend/backend repo is cloned in a sibling folder on disk, mount it into Stryker via `npx mate-sdt mutate --dir ../backend-repo`.
-3.  **Isolated Execution in Ephemeral Podman Containers:**  
-    All destructive tests, stress scenarios, and mutation test runs must execute inside a rootless, isolated **Podman** container:
+3.  **Isolated Execution in Ephemeral Container Sandboxes (Podman, Docker, or Host Fallback):**  
+    Destructive tests, stress scenarios, and mutation test runs execute inside an isolated container sandbox (configured via `.mate/config.json`):
+    - **Podman (Default/Recommended):** Rootless, daemonless sandbox (`podman run --rm -v $(pwd):/app:Z -w /app node:20-alpine ...`).
+    - **Docker:** Supported container sandbox (`docker run --rm -v $(pwd):/app -w /app node:20-alpine ...`).
+    - **None (Direct Host):** Runs `npx stryker run` natively on the host without container sandboxing.
+
+    Run effortlessly via the unified CLI command:
     ```bash
-    podman run --rm -v $(pwd):/app -w /app node:20-alpine npx stryker run
+    npx mate-sdt mutate
     ```
-    This ensures zero contamination of the host machine and guarantees 100% reproducible results in CI/CD pipelines.
+    This ensures zero contamination of the host machine when containers are active and provides maximum flexibility across developer setups.
 
 ---
 

@@ -58,6 +58,7 @@ function parseFlags(args) {
     config: 'stryker.config.json',
     starter: true,
     playwrightCli: false,
+    container: null,
     aiEvals: false,
     help: false,
     version: false,
@@ -101,6 +102,10 @@ function parseFlags(args) {
       flags.playwrightCli = true;
     } else if (arg === '--no-playwright-cli') {
       flags.playwrightCli = false;
+    } else if ((arg === '--container' || arg === '--runtime') && args[i + 1]) {
+      flags.container = args[++i].toLowerCase();
+    } else if (arg.startsWith('--container=') || arg.startsWith('--runtime=')) {
+      flags.container = arg.split('=')[1].toLowerCase();
     } else if (arg === '--with-ai-evals' || arg === '--ai-evals' || arg === '--with-ai') {
       flags.aiEvals = true;
     } else if (arg === '--consolidate') {
@@ -279,6 +284,7 @@ function printHelp() {
   console.log('    --mode <mode>            Project mode: greenfield | brownfield | skills-only');
   console.log('    --ide <list>             Target IDEs: antigravity,claude,cursor,windsurf,copilot,codex,all');
   console.log('    --dir <path>             Target project directory (default: current directory)');
+  console.log('    --container <runtime>    Container sandbox runtime: podman | docker | none (default: podman)');
   console.log('    --with-playwright-cli    Install @playwright/cli & @playwright/test via npm');
   console.log('    --with-ai-evals          Install the AI Agent, Chatbot & RAG Quality Pack (Promptfoo + DeepEval + OTel)');
   console.log('    --no-starter             Skip sample spec & Playwright/API/k6 starter templates\n');
@@ -303,6 +309,7 @@ async function handleInstall(flags) {
   let includeStarterFiles = flags.starter;
   let installPlaywrightCli = flags.playwrightCli;
   let installAiEvals = flags.aiEvals !== undefined ? flags.aiEvals : existing.hasAiPack;
+  let containerRuntime = flags.container;
 
   if (!flags.yes && process.stdin.isTTY) {
     const rl = createPromptInterface();
@@ -414,6 +421,37 @@ async function handleInstall(flags) {
           mode !== 'skills-only'
         );
 
+        let defaultContainerIndex = 0;
+        try {
+          const p = spawnSync('podman', ['--version'], { encoding: 'utf8' });
+          if (p.status !== 0) {
+            const d = spawnSync('docker', ['--version'], { encoding: 'utf8' });
+            defaultContainerIndex = d.status === 0 ? 1 : 2;
+          }
+        } catch {
+          defaultContainerIndex = 0;
+        }
+
+        containerRuntime = await promptSelect(
+          rl,
+          'Select your container sandbox runtime for mutation testing (Stryker) and performance (k6):',
+          [
+            {
+              label: 'Podman (Recommended: Rootless, daemonless, free enterprise container sandbox)',
+              value: 'podman',
+            },
+            {
+              label: 'Docker (Docker Desktop / Docker Engine)',
+              value: 'docker',
+            },
+            {
+              label: 'None (Direct host execution — run Stryker and k6 on bare host without containers)',
+              value: 'none',
+            },
+          ],
+          defaultContainerIndex
+        );
+
         installAiEvals = await promptConfirm(
           rl,
           'Install the AI Agent, Chatbot & RAG Quality Pack? (4 AI Skills + Promptfoo + DeepEval + OTel Trace Auditor)',
@@ -434,6 +472,7 @@ async function handleInstall(flags) {
     includeStarterFiles,
     installPlaywrightCli,
     installAiEvals,
+    containerRuntime,
   });
 
   console.log(color('  📦 Scaffolded Project Artifacts:', COLORS.bold, COLORS.cyan));
@@ -1062,16 +1101,23 @@ function handleStatus(flags) {
       COLORS.bold
     )}`
   );
-  console.log(
-    `  • Rootless Podman Engine:                        ${
-      status.podmanAvailable
-        ? color(`✔ ${status.podmanVersion}`, COLORS.brightGreen)
-        : color('✘ Not detected in PATH', COLORS.yellow)
-    }`
-  );
-  let perfEngineDisplay = color('✘ Neither Podman nor native k6 detected (run: winget install k6 or install podman)', COLORS.yellow);
-  if (status.podmanAvailable) {
-    perfEngineDisplay = color(`✔ ${status.podmanVersion} (sandbox: grafana/k6:latest)`, COLORS.brightGreen);
+  const runtimeDisplay = {
+    podman: status.podmanAvailable
+      ? color(`✔ Podman (${status.podmanVersion})`, COLORS.brightGreen)
+      : color('✘ Podman (configured, but not detected in PATH)', COLORS.yellow),
+    docker: status.dockerAvailable
+      ? color(`✔ Docker (${status.dockerVersion})`, COLORS.brightGreen)
+      : color('✘ Docker (configured, but not detected in PATH or daemon not running)', COLORS.yellow),
+    none: color('None (Direct host execution without container sandbox)', COLORS.cyan),
+  }[status.configuredContainerRuntime || 'podman'] || status.configuredContainerRuntime;
+
+  console.log(`  • Container Sandbox Runtime:                    ${runtimeDisplay}`);
+
+  let perfEngineDisplay = color('✘ Neither container engine nor native k6 detected (run: winget install k6)', COLORS.yellow);
+  if (status.configuredContainerRuntime === 'docker' && status.dockerAvailable) {
+    perfEngineDisplay = color(`✔ Docker (sandbox: grafana/k6:latest)`, COLORS.brightGreen);
+  } else if (status.podmanAvailable) {
+    perfEngineDisplay = color(`✔ Podman (${status.podmanVersion} - sandbox: grafana/k6:latest)`, COLORS.brightGreen);
   } else if (status.k6Available) {
     perfEngineDisplay = color(`✔ ${status.k6Version} (native host)`, COLORS.brightGreen);
   }

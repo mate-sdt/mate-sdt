@@ -35,6 +35,10 @@ const {
 } = require('./generators');
 
 const {
+  resolveContainerRuntime,
+  saveContainerConfig,
+  runContainerMutation,
+  runContainerK6,
   runPodmanMutation,
   runPodmanK6,
 } = require('./containers');
@@ -501,6 +505,10 @@ function installMate(options = {}) {
   const installPlaywrightCli = Boolean(options.installPlaywrightCli);
 
   const scaffolded = initMateProject(targetDir, { mode, includeStarterFiles });
+  const containerRuntime = options.containerRuntime || resolveContainerRuntime(targetDir);
+  const savedRuntime = saveContainerConfig(targetDir, containerRuntime);
+  scaffolded.push(`.mate/config.json (container sandbox runtime: ${savedRuntime})`);
+
   if (ensureGitignore(targetDir)) {
     if (!scaffolded.includes('.gitignore') && !scaffolded.some((s) => s.startsWith('.gitignore'))) {
       scaffolded.push('.gitignore (configured ignore rules for node_modules, .env, Playwright & M.A.T.E.)');
@@ -608,6 +616,20 @@ function checkStatus(targetDir = '.') {
     podmanAvailable = false;
   }
 
+  let dockerAvailable = false;
+  let dockerVersion = null;
+  try {
+    const res = spawnSync('docker', ['--version'], { encoding: 'utf8' });
+    if (res.status === 0 && res.stdout) {
+      dockerAvailable = true;
+      dockerVersion = res.stdout.trim();
+    }
+  } catch {
+    dockerAvailable = false;
+  }
+
+  const configuredContainerRuntime = resolveContainerRuntime(resolved);
+
   let playwrightCliAvailable = false;
   let playwrightCliVersion = null;
   const localPwCliPkg = path.join(resolved, 'node_modules', '@playwright', 'cli', 'package.json');
@@ -665,8 +687,11 @@ function checkStatus(targetDir = '.') {
     hasAgentsMd,
     specValidation,
     auditResult,
+    configuredContainerRuntime,
     podmanAvailable,
     podmanVersion,
+    dockerAvailable,
+    dockerVersion,
     playwrightCliAvailable,
     playwrightCliVersion,
     k6Available,
@@ -761,6 +786,10 @@ module.exports = {
   // Harness & Container Execution
   analyzeContextEngineering,
   runHarnessGate,
+  resolveContainerRuntime,
+  saveContainerConfig,
+  runContainerMutation,
+  runContainerK6,
   runPodmanMutation,
   runPodmanK6,
 };
