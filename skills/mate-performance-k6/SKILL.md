@@ -27,6 +27,28 @@ This skill governs **Non-Functional Oracles (`<performance_oracles>`)** in the M
 
 ---
 
+## ❓ 0. Pre-Flight Check: Handling Missing Performance Tooling (Podman / k6)
+
+Before attempting to execute a performance test, verify whether a container engine (Podman) or native `k6` is available:
+
+> [!IMPORTANT]
+> **If NEITHER Podman NOR native `k6` is installed:**  
+> **NEVER fail silently or guess performance metrics.**  
+> **STOP IMMEDIATELY and raise this explicit multiple-choice question to the human user/tester:**
+>
+> > *"We don't have Grafana k6 or a container engine (Podman) available in this environment. How would you like to proceed?"*
+> >
+> > 1. **(Recommended) Install native `k6`:**  
+> >    - Windows: `winget install k6 --source winget` or `choco install k6`  
+> >    - macOS: `brew install k6`  
+> >    - Linux (Ubuntu/Debian): `sudo apt-get install k6`  
+> > 2. **Install rootless Podman (for isolated container sandboxing):**  
+> >    Install Podman (`winget install RedHat.Podman-Desktop` / `brew install podman`) to run k6 in ephemeral containers without host contamination.  
+> > 3. **Skip Performance Testing for now:**  
+> >    Keep the `tests/nfr/*.k6.js` script authored, mark performance as pending in `docs/test-plans/`, and defer execution to CI/CD pipelines where k6 or container runtimes exist.
+
+---
+
 ## 📈 Load Profile Selection Matrix
 
 | Profile Type | Purpose | VU / Arrival Pattern | Typical Duration | When to Use |
@@ -48,18 +70,23 @@ Every k6 script in `tests/nfr/*.k6.js` must bind directly to the SLAs declared i
 
 ---
 
-## 🐳 Execution in Rootless Podman
+## 🐳 Dual-Engine Execution: Container Sandbox & Native Host Fallback
 
-Run k6 scripts in isolated containers via the M.A.T.E. CLI:
+Run k6 scripts seamlessly via the M.A.T.E. CLI (`npx mate-sdt k6`):
 
-```bash
-npx mate-sdt k6 tests/nfr/load.k6.js
-```
+1. **Automatic Container Sandboxing (Preferred):** If Podman is installed, runs inside `grafana/k6:latest` ephemeral container sandbox:
+   ```bash
+   npx mate-sdt k6 tests/nfr/load.k6.js
+   ```
+2. **Native Host Fallback:** If Podman is not detected, `npx mate-sdt k6` automatically detects and uses your local native `k6` installation.
+3. **Manual Direct Invocations:**
+   ```bash
+   # Direct Container Sandbox:
+   podman run --rm -i -v $(pwd):/app:Z -w /app grafana/k6 run tests/nfr/load.k6.js
 
-Or directly via Podman:
-```bash
-podman run --rm -i -v $(pwd):/app:Z -w /app grafana/k6 run tests/nfr/load.k6.js
-```
+   # Direct Native Host:
+   k6 run tests/nfr/load.k6.js
+   ```
 
 ---
 

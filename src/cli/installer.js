@@ -636,6 +636,22 @@ function checkStatus(targetDir = '.') {
     }
   }
 
+  let k6Available = false;
+  let k6Version = null;
+  try {
+    const k6Cmd = process.platform === 'win32' ? 'k6.exe' : 'k6';
+    const res = spawnSync(k6Cmd, ['version'], {
+      encoding: 'utf8',
+      shell: process.platform === 'win32',
+    });
+    if (res.status === 0 && res.stdout) {
+      k6Available = true;
+      k6Version = res.stdout.trim().split('\n')[0];
+    }
+  } catch {
+    k6Available = false;
+  }
+
   return {
     targetDir: resolved,
     hasProjectMap,
@@ -653,6 +669,8 @@ function checkStatus(targetDir = '.') {
     podmanVersion,
     playwrightCliAvailable,
     playwrightCliVersion,
+    k6Available,
+    k6Version,
   };
 }
 

@@ -13,6 +13,14 @@ Execute this workflow to verify Non-Functional Requirements (latency SLAs, throu
 ---
 
 ## Step 1: Verify Performance Oracles & VU Limits (`mate-performance-k6`)
+
+> ⚠️ **Pre-Flight Check (Engine Readiness):**  
+> Check if Podman or native `k6` is available in PATH. If NEITHER is installed, **STOP IMMEDIATELY** and ask the user:  
+> *"We don't have Grafana k6 or a container engine (Podman) available in this environment. How would you like to proceed?"*  
+> 1. **(Recommended) Install native `k6`:** `winget install k6` (Windows), `brew install k6` (macOS), `sudo apt install k6` (Linux).  
+> 2. **Install rootless Podman (for isolated container sandboxing):** `winget install RedHat.Podman-Desktop` / `brew install podman`.  
+> 3. **Skip Performance Testing for now:** Author the script and defer execution to CI/CD pipelines.
+
 1. Read `MATE-PROJECT-MAP.md` and `specs/[module].mate-spec.md`.
 2. Confirm `<invariants>` / `<performance_oracles>` define explicit SLAs (e.g., `P95 <= 400ms`, `Error Rate < 1%`, target RPS/VUs) and environment VU caps. If missing, ask the user—never guess load targets.
 
@@ -21,8 +29,8 @@ Execute this workflow to verify Non-Functional Requirements (latency SLAs, throu
 2. Create `tests/nfr/[module].k6.js` based on `skills/mate-performance-k6/resources/k6-load.template.js`.
 3. Map every SLA to deterministic k6 `thresholds` (`http_req_duration`, `http_req_failed`, custom `Trend`/`Rate` metrics) so k6 exits with a non-zero code if any oracle breaks.
 
-## Step 3: Execute in Rootless Podman (`npx mate-sdt k6`)
-1. Run the containerized k6 suite:
+## Step 3: Execute via Dual-Engine Runner (`npx mate-sdt k6`)
+1. Run the k6 suite (automatically executes in Podman sandbox if available, or falls back to native host `k6`):
    ```bash
    npx mate-sdt k6 tests/nfr/[module].k6.js
    ```

@@ -1069,6 +1069,13 @@ function handleStatus(flags) {
         : color('✘ Not detected in PATH', COLORS.yellow)
     }`
   );
+  let perfEngineDisplay = color('✘ Neither Podman nor native k6 detected (run: winget install k6 or install podman)', COLORS.yellow);
+  if (status.podmanAvailable) {
+    perfEngineDisplay = color(`✔ ${status.podmanVersion} (sandbox: grafana/k6:latest)`, COLORS.brightGreen);
+  } else if (status.k6Available) {
+    perfEngineDisplay = color(`✔ ${status.k6Version} (native host)`, COLORS.brightGreen);
+  }
+  console.log(`  • Performance Engine (Grafana k6):               ${perfEngineDisplay}`);
   console.log(
     `  • Playwright CLI (@playwright/cli):              ${
       status.playwrightCliAvailable

@@ -200,6 +200,7 @@ describe('M.A.T.E. SDT Framework CLI, 9 Skills, 5 Workflows & Auditor Suite', ()
       assert.equal(status.hasProjectMap, true);
       assert.equal(status.auditResult.grade, 'A');
       assert.equal(status.specValidation.allValid, true);
+      assert.equal(typeof status.k6Available, 'boolean');
     } finally {
       fs.rmSync(tmpDir, { recursive: true, force: true });
     }
