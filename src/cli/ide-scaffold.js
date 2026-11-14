@@ -397,6 +397,7 @@ function installUniversalAgents(targetDir) {
     '',
     '## 2. Zero-Assumption Escalation & Sub-Agent Delegation Protocols',
     '- **Zero-Assumption & Open-Question Escalation ("Ask, Never Guess"):** Inspect local/live context first. Never invent business thresholds, auth boundaries, or requirements. Tag unknowns `[TBD: <exact question>]` under `## Open Questions for Human QA`, finish unblocked work, and halt on `STATUS: BLOCKED_ON_USER_INPUT` (`GATE-01`/`GATE-02`) to ask the human.',
+    '- **Missing Tooling Pre-Flight Check (`@playwright/cli`):** If `@playwright/cli` is not installed when entering live reconnaissance (`mate-pw-recon`), STOP and ask the human: *"We don\'t have `playwright-cli` available. How would you like to proceed?"* with options: 1. Install `@playwright/cli` (Recommended), 2. Use Browser MCP, 3. Inspect Source Code, 4. Provide DOM Snippets.',
     '- **Sub-Agent Delegation & 3-Phase Pipeline Isolation:** Build scoped sub-agent prompts via `npx mate-sdt context <module> --subagent <skill>`. Isolate Reader/Extractor -> Spec Scorer -> Code Writer -> Independent Reviewer (`mate-review`/`mate-audit`) via `mate.handoff/v1` (or `--compact` fallback in single-agent IDEs).',
     '',
     '## 3. Forward-Only 6-Layer Architecture & Strict POM',

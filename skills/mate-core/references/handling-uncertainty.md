@@ -15,6 +15,7 @@ When information is missing and the user is available:
 - **Missing Performance SLA:** *"What is the target P95 response time, maximum error rate, and peak Virtual Users (VUs) for this endpoint?"*
 - **Ambiguous State Transition:** *"Can an order transition from `PICKED_UP` to `CANCELLED`, or is cancellation strictly forbidden after pickup?"*
 - **Destructive Live Action:** *"Exploring this live page shows a 'Delete Account' button. Should I skip this interaction?"*
+- **Missing Tooling (`@playwright/cli`):** *"We don't have `playwright-cli` available in this project. How would you like to proceed? 1. (Recommended) Install `@playwright/cli` now, 2. Use an existing Browser MCP Server/Tool, 3. Inspect Frontend Source Code directly (White-Box), 4. Provide DOM Snippets or Selectors Manually."*
 
 ## 3. Mark Unknowns Explicitly with `[TBD]` & Escalate (`STATUS: BLOCKED_ON_USER_INPUT`)
 When generating a draft specification (`status: DRAFT` or `status: REVIEW`) or test case matrix (`docs/test-cases/TC-*.md`) without complete information:

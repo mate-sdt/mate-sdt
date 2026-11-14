@@ -24,10 +24,12 @@ flowchart LR
 
 ## Phase 1: Bootstrap Standalone QA Harness & Global Live Recon (`mate-core` + `mate-pw-recon`)
 1. Ensure the project has the M.A.T.E. standalone execution harness (`playwright.config.ts`, `tsconfig.json`, `.env.example`, and `package.json` scripts). Copy `.env.example` to `.env` and set `BASE_URL` to the live staging/production URL.
-2. Open the live application via `playwright-cli open <BASE_URL>` (`mate-pw-recon`).
-3. Crawl the primary navigation, user roles, forms, and workflows using `playwright-cli snapshot`.
-4. Inspect `playwright-cli network` during navigation to discover the underlying backend API endpoints (`REST`/`GraphQL`), auth headers, and status codes—even if Backend has no Swagger/OpenAPI docs (`references/network-api-discovery.md`).
-5. Populate the **System Modules** and **Architecture Stack** tables inside `MATE-PROJECT-MAP.md`.
+2. Check `@playwright/cli` availability. If NOT installed, **STOP** and ask the user:  
+   *"We don't have `playwright-cli` available in this project. How would you like to proceed?"* (Options: 1. Install `@playwright/cli` [Recommended], 2. Use Browser MCP, 3. Inspect Source Code, 4. Provide DOM Snippets).
+3. Open the live application via `playwright-cli open <BASE_URL>` (`mate-pw-recon`) or the selected fallback method.
+4. Crawl the primary navigation, user roles, forms, and workflows using `playwright-cli snapshot` (or MCP/source inspection).
+5. Inspect `playwright-cli network` during navigation to discover the underlying backend API endpoints (`REST`/`GraphQL`), auth headers, and status codes—even if Backend has no Swagger/OpenAPI docs (`references/network-api-discovery.md`).
+6. Populate the **System Modules** and **Architecture Stack** tables inside `MATE-PROJECT-MAP.md`.
 
 ---
 

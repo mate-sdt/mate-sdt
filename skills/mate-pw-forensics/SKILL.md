@@ -13,6 +13,10 @@ description: >-
 
 This skill governs **Phase 3 of `@playwright/cli` in M.A.T.E.**: using multi-session browser orchestration for **Pillar T concurrency attacks**, capturing **microsecond forensic traces and 60fps WebM videos** for **Pillar E charters and Day-2 Bug Reports**, and attaching visual proof to Pull Requests and issue trackers.
 
+> [!NOTE]
+> **Operating Without `@playwright/cli` (Fallback Mode):**  
+> If `@playwright/cli` is not installed, multi-actor concurrency tests are implemented directly in automated code using standard `@playwright/test` parallel browser contexts (`await browser.newContext()`) with `Promise.all()` in `tests/threats/*.spec.ts`. Forensic tracing and video recording are handled natively via `playwright.config.ts` (`use: { trace: 'retain-on-failure', video: 'retain-on-failure' }`).
+
 ---
 
 ## 🔗 Skill Synergy & Handoff Protocol

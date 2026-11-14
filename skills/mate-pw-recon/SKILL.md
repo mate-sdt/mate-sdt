@@ -35,6 +35,28 @@ This skill governs **Phase 1 of `@playwright/cli` in M.A.T.E.**: using the brows
 
 ---
 
+## ❓ 0. Pre-Flight Check: Handling Missing `@playwright/cli` (Graceful Fallback Protocol)
+
+Before executing any `playwright-cli open` or reconnaissance command, verify whether `@playwright/cli` is available (e.g., check `node_modules/@playwright/cli` or execute `npx playwright-cli --version`).
+
+> [!IMPORTANT]
+> **If `@playwright/cli` is NOT installed:**  
+> **NEVER fail silently, hallucinate execution, or get trapped in an endless command retry loop.**  
+> **STOP IMMEDIATELY and raise this explicit multiple-choice question to the human user/tester:**
+>
+> > *"We don't have `playwright-cli` available in this project. How would you like to proceed?"*
+> >
+> > 1. **(Recommended) Install `@playwright/cli` now:**  
+> >    Run `npm install -D @playwright/cli` (or `npx mate-sdt setup-playwright`) to enable live terminal browser exploration, ARIA snapshots (`playwright-cli snapshot`), and interactive locator discovery.
+> > 2. **Use an existing Browser MCP Server / Tool:**  
+> >    Use an active Browser MCP server (e.g., Playwright MCP, Puppeteer MCP, or IDE browser tool) connected to your AI environment to navigate the URL and capture DOM/accessibility snapshots.
+> > 3. **Inspect Frontend Source Code directly (White-Box):**  
+> >    Skip live browser exploration and discover UI elements, form fields, and routes directly from source code components (`src/`, `components/`, JSX/TSX/HTML templates).
+> > 4. **Provide DOM Snippets or Selectors Manually:**  
+> >    Paste the relevant HTML snippet, DOM elements, or target selectors directly into the chat so the agent can build the Page Objects without live browser access.
+
+---
+
 ## ⚡ 1. Core Recon & Interactive Verification Commands (`@playwright/cli`)
 
 ```bash

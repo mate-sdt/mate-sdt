@@ -41,6 +41,10 @@ Never paste raw `#Ran Playwright code` lines directly into `tests/e2e/*.spec.ts`
 
 Always register every new Page Object, Component Object, and Fixture inside **`MATE-PROJECT-MAP.md`** so future sessions reuse them instead of duplicating classes.
 
+> [!TIP]
+> **Operating Without `@playwright/cli` (Fallback Mode):**  
+> If the user chose not to install `@playwright/cli` (opting instead for Source Code Inspection, a Browser MCP, or manual DOM snippets), this 4-layer pipeline operates identically: discover locators from the available source (`page.getByRole`, `page.getByLabel`, `page.getByTestId`), encapsulate them in `src/pages/*.page.ts` and `src/components/*.component.ts`, and wire them through fixtures. The resulting `@playwright/test` code does NOT require `@playwright/cli` to run.
+
 > [!CAUTION]
 > **Zero Direct Locators or Actions in Test Specs (`MATE-ANTI-08` CRITICAL):**  
 > Never inject `{ page }` into a test spec to write inline `page.getByRole()`, `page.getByTestId()`, `page.fill()`, or `page.goto()`. If a user story covers a new page or modal (e.g., Customer Registration, Multi-step Checkout, Admin Management), you **MUST** create the Page Object (`src/pages/<domain>.page.ts`) extending `BasePage`, encapsulate all locators and methods inside it, inject it via `src/fixtures/mate.fixtures.ts`, and interact solely through the fixture. Any direct `page` locator or action in a `.spec.ts` triggers `MATE-ANTI-08` (`CRITICAL`), failing `GATE-04-SOLID-AUDIT` with exit code 1.

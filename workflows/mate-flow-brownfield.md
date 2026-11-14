@@ -15,7 +15,7 @@ Execute this workflow when onboarding an existing/legacy repository or an undocu
 ## Step 1: Surface Reconnaissance (`mate-core`, `mate-pw-recon` & `mate-model`)
 Choose the appropriate reconnaissance path (or combine both):
 - **Path A (Source Code & Legacy Suite Scan):** Inspect `package.json` / `pom.xml` / `pyproject.toml`, API routing tables, controllers, ORM models, and existing manual/legacy test suites (`skills/mate-story-testcases/references/legacy-manual-migration.md`).
-- **Path B (Live Browser & Network Reconnaissance via `@playwright/cli`):** Activate `mate-pw-recon` (`playwright-cli open <url>`, `snapshot`, `network`) and follow `skills/mate-pw-recon/references/network-api-discovery.md` to inventory DOM elements, observe state transitions, and reverse-engineer backend API endpoints without executing destructive actions.
+- **Path B (Live Browser & Network Reconnaissance via `@playwright/cli`):** Verify `@playwright/cli` availability (if missing, STOP and ask the user whether to install it, use Browser MCP, inspect source code, or paste DOM). If available, activate `mate-pw-recon` (`playwright-cli open <url>`, `snapshot`, `network`) and follow `skills/mate-pw-recon/references/network-api-discovery.md` to inventory DOM elements, observe state transitions, and reverse-engineer backend API endpoints without executing destructive actions.
 
 ## Step 2: Initialize or Update `MATE-PROJECT-MAP.md` (`mate-core`)
 1. Run `npx mate-sdt init` if the project has not been initialized yet.

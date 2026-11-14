@@ -48,8 +48,17 @@ flowchart LR
 ---
 
 ## Step 3: Validate Live Behavior with `@playwright/cli` (`mate-pw-recon`)
-1. Open the running application via `playwright-cli open <url>`.
-2. Inspect the ARIA tree (`playwright-cli snapshot`) and walk through the designed test cases (`HAPPY_PATH`, `BORDER_CASE`, `NEGATIVE_PATH`) interactively using `fill`, `click`, `select`, `eval`, `console`, and `network`.
+
+> ⚠️ **Pre-Flight Check (Handling Missing `@playwright/cli`):**  
+> Before executing `playwright-cli open`, check if `@playwright/cli` is installed in the project. If NOT installed, **STOP IMMEDIATELY** and ask the user:  
+> *"We don't have `playwright-cli` available in this project. How would you like to proceed?"*  
+> 1. **(Recommended) Install `@playwright/cli` now:** Run `npm install -D @playwright/cli` (or `npx mate-sdt setup-playwright`).  
+> 2. **Use an existing Browser MCP Server / Tool:** Navigate and snapshot via connected Playwright/Puppeteer MCP.  
+> 3. **Inspect Frontend Source Code directly (White-Box):** Discover UI elements and fields from source components (`src/`, `components/`).  
+> 4. **Provide DOM Snippets or Selectors Manually:** Prompt the user to paste target HTML/selectors.
+
+1. Open the running application via `playwright-cli open <url>` (or your selected fallback method).
+2. Inspect the ARIA tree (`playwright-cli snapshot` or MCP/DOM inspection) and walk through the designed test cases (`HAPPY_PATH`, `BORDER_CASE`, `NEGATIVE_PATH`) interactively using `fill`, `click`, `select`, `eval`, `console`, and `network`.
 3. Extract semantic locators (`getByRole`, `getByLabel`, `getByTestId`) and identify reusable `BaseComponent` vs. `BasePage` boundaries.
 4. Record the honest live result (`✅ PASS` vs. `❌ FAIL`) for each `TC-XX` in `docs/test-cases/TC-[module].md` and `.csv`.
 5. Close the CLI browser session (`playwright-cli close`).

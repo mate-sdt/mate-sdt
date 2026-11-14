@@ -49,7 +49,14 @@ Its purpose is to ensure that any software project implements a quality architec
 6. **Strict Handling Uncertainty Protocol:**  
    - **Never Assume:** Do not invent SLAs, authentication flows, or undocumented business rules.
    - **Ask First or Mark `[TBD]`:** When critical context is missing, ask targeted clarifying questions or mark `[TBD: needs input on X]` with explicit confidence levels (`Observed` vs. `Inferred`). See [`references/handling-uncertainty.md`](./references/handling-uncertainty.md).
-7. **Skill Synergy & Lifecycle Routing:**  
+7. **Missing Tooling Pre-Flight Check (`@playwright/cli`):**  
+   Whenever an agent or workflow enters a phase that leverages `@playwright/cli` (`mate-pw-recon`, `mate-pw-forensics`), the agent must verify whether `@playwright/cli` is installed. If NOT installed, **never fail blindly or retry in a loop**. STOP and raise the standard clarification question to the human engineer:
+   > *"We don't have `playwright-cli` available in this project. How would you like to proceed?"*
+   > 1. *(Recommended)* Install `@playwright/cli` now (`npm install -D @playwright/cli` or `npx mate-sdt setup-playwright`).
+   > 2. Use an existing Browser MCP Server / Tool.
+   > 3. Inspect Frontend Source Code directly (White-Box).
+   > 4. Provide DOM Snippets or Selectors Manually.
+8. **Skill Synergy & Lifecycle Routing:**  
    Orchestrates the **20 M.A.T.E. Skills** (16 Core + 4 AI Agent/RAG Pack) and **8 End-to-End Workflows** so the exact right skill activates at the exact right moment.
 
 ---
