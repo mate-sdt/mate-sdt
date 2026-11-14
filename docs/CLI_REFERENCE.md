@@ -35,7 +35,7 @@ npx mate-sdt install [options]
 *   `--ide <list>`: Comma-separated list of IDEs (`antigravity` [aliases: `antigravity-ide`, `antigravity-cli`, `agy`], `claude` [alias: `claude-code`], `cursor`, `windsurf` [alias: `cascade`], `copilot` [alias: `github-copilot`], `codex` [aliases: `openai-codex`, `universal`, `agents`], or `all`).
     *   *Google Antigravity Note:* Installs skills into `.agents/skills/<name>/SKILL.md` and installs all E2E workflows as first-class skills into `.agents/skills/<workflow>/SKILL.md`, enabling native slash commands (e.g., `/mate-flow-user-story`, `/mate-flow-triage`, `/mate-flow-zero-to-one`) in both Antigravity IDE and the `agy` CLI (with legacy fallback preserved in `.agent/workflows/mate/`).
 *   `--dir <path>`: Target directory (defaults to `.`).
-*   `--container <podman|docker|none>` (or `--runtime`): Select container sandbox runtime for isolated k6 performance and load testing (`podman` [recommended], `docker`, or `none` [native host]).
+*   `--container <podman|docker|none>` (or `--runtime`): Select container runner runtime for k6 performance and load testing (`podman` [recommended], `docker`, or `none` [native host]).
 *   `--with-playwright-cli`: Automatically install `@playwright/cli@latest` and `@playwright/test@latest` via npm.
 *   `--with-ai-evals`: Install the on-demand **AI Agent, Chatbot & RAG Quality Pack** (4 AI Skills, `/mate-flow-ai-agent`, Promptfoo, DeepEval & OTel Trace Auditor).
 *   `--no-starter`: Do not copy starter Playwright/API/k6 templates or sample spec.
@@ -155,7 +155,7 @@ Returns exit code `1` if any `CRITICAL` anti-pattern (`MATE-ANTI-01` arbitrary s
 ---
 
 ### 5. `k6 [script-path]`
-Executes a **Grafana k6** performance test script inside an ephemeral container sandbox (**Podman** or **Docker**) or natively on host, validating `<performance_oracles>` SLAs. Supports `--runtime <podman|docker|none>`.
+Executes a **Grafana k6** performance test script using a container runner (**Podman** or **Docker**) or natively on host, validating `<performance_oracles>` SLAs. Supports `--runtime <podman|docker|none>`.
 
 ```bash
 npx mate-sdt k6 tests/nfr/order-load.k6.js

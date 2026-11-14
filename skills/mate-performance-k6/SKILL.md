@@ -42,8 +42,8 @@ Before attempting to execute a performance test, verify whether a container engi
 > >    - Windows: `winget install k6 --source winget` or `choco install k6`  
 > >    - macOS: `brew install k6`  
 > >    - Linux (Ubuntu/Debian): `sudo apt-get install k6`  
-> > 2. **Install rootless Podman (for isolated container sandboxing):**  
-> >    Install Podman (`winget install RedHat.Podman-Desktop` / `brew install podman`) to run k6 in ephemeral containers without host contamination.  
+> > 2. **Install rootless Podman (for zero-install container runner):**  
+> >    Install Podman (`winget install RedHat.Podman-Desktop` / `brew install podman`) to run k6 in ephemeral containers without host toolchain installation.  
 > > 3. **Skip Performance Testing for now:**  
 > >    Keep the `tests/nfr/*.k6.js` script authored, mark performance as pending in `docs/test-plans/`, and defer execution to CI/CD pipelines where k6 or container runtimes exist.
 
@@ -70,18 +70,18 @@ Every k6 script in `tests/nfr/*.k6.js` must bind directly to the SLAs declared i
 
 ---
 
-## 🐳 Dual-Engine Execution: Container Sandbox & Native Host Fallback
+## 🐳 Dual-Engine Execution: Container Runner & Native Host Fallback
 
 Run k6 scripts seamlessly via the M.A.T.E. CLI (`npx mate-sdt k6`):
 
-1. **Automatic Container Sandboxing (Preferred):** If Podman is installed, runs inside `grafana/k6:latest` ephemeral container sandbox:
+1. **Automatic Container Runner (Zero-Install):** If Podman or Docker is installed, runs inside `grafana/k6:latest` ephemeral container:
    ```bash
    npx mate-sdt k6 tests/nfr/load.k6.js
    ```
-2. **Native Host Fallback:** If Podman is not detected, `npx mate-sdt k6` automatically detects and uses your local native `k6` installation.
+2. **Native Host Fallback:** If a container engine is not detected, `npx mate-sdt k6` automatically detects and uses your local native `k6` installation.
 3. **Manual Direct Invocations:**
    ```bash
-   # Direct Container Sandbox:
+   # Direct Container Runner (Podman):
    podman run --rm -i -v $(pwd):/app:Z -w /app grafana/k6 run tests/nfr/load.k6.js
 
    # Direct Native Host:

@@ -5,7 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/mate-sdt.svg?style=flat-square&color=2ea44f)](https://www.npmjs.com/package/mate-sdt)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](./LICENSE)
 [![Node.js >= 18](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen?style=flat-square)](https://nodejs.org)
-[![Container Engine](https://img.shields.io/badge/Sandbox-Podman_%7C_Docker_%7C_Host-892ca0?style=flat-square)](#-cli-commands-reference)
+[![Container Engine](https://img.shields.io/badge/k6_Runner-Podman_%7C_Docker_%7C_Host-892ca0?style=flat-square)](#-cli-commands-reference)
 [![Support on Ko-fi](https://img.shields.io/badge/Ko--fi-Buy_Me_a_Mate_🧉-ff5e5b?style=flat-square&logo=kofi&logoColor=white)](https://ko-fi.com/crespoantonio)
 
 > *"AI-generated implementation code is ephemeral and disposable.  
@@ -62,7 +62,7 @@ In the Agentic Era (2026+), autonomous AI agents write thousands of lines of cod
 | :---: | :--- | :--- | :--- |
 | **M** | **Model** | Eradicate ambiguity before code exists. Model Finite State Machines (FSM), **Explicit Forbidden Transitions**, strict contracts, and Live Page Reconnaissance (`page-explorer`). | `specs/[module].mate-spec.md` (`<intent_model>`) |
 | **A** | **Assert** | Translate deterministic business invariants into OOP/SOLID Playwright UI & API suites (`BasePage`, `ComponentObject`, `BaseApiClient`, Dependency Inversion fixtures, **zero arbitrary sleeps**). | `specs/[module].mate-spec.md` (`<invariants>`) + `src/pages/`, `src/api/`, `src/fixtures/` |
-| **T** | **Threat & Trash** | Shatter the happy-path illusion: race conditions, double-click idempotency, payload fuzzing, BOLA authorization bypasses, and **k6 Performance SLAs** inside isolated container sandboxes (**Podman** or **Docker**, or natively on host). | `specs/[module].mate-spec.md` (`<threat_scenarios>`) + `tests/threats/*.spec.ts` + `tests/nfr/*.k6.js` |
+| **T** | **Threat & Trash** | Shatter the happy-path illusion: race conditions, double-click idempotency, boundary payload fuzzing, BOLA authorization bypasses, and **k6 Performance SLAs** via zero-install container runners (**Podman** or **Docker**) or native host. | `specs/[module].mate-spec.md` (`<threat_scenarios>`) + `tests/threats/*.spec.ts` + `tests/nfr/*.k6.js` |
 | **E** | **Explore** | Safeguard human quality via Session-Based Test Management (SBTM) charters (ergonomics, WCAG 2.1 AA accessibility, trust) and issue the formal release verdict: `PASS`, `CONCERNS` (with signed waiver), or `FAIL`. | `tests/charters/CHR-*.md` & `specs/waivers/WVR-*.md` |
 
 ---
@@ -160,7 +160,7 @@ your-project/
 
 | Command | Description |
 | :--- | :--- |
-| `npx mate-sdt install` | Launch the interactive installer (choose Greenfield/Brownfield mode, target AI IDEs, container sandbox runtime [Podman/Docker/None], starter templates, and Playwright CLI setup). |
+| `npx mate-sdt install` | Launch the interactive installer (choose Greenfield/Brownfield mode, target AI IDEs, k6 container runner [Podman/Docker/None], starter templates, and Playwright CLI setup). |
 | `npx mate-sdt init [dir]` | Quickly scaffold the M.A.T.E. directory structure and `MATE-PROJECT-MAP.md`. |
 | `npx mate-sdt setup-playwright [dir]` | Install `@playwright/cli@latest` and `@playwright/test@latest` in the target project and configure `.gitignore`. |
 | `npx mate-sdt setup-ai [dir]` | Install the on-demand **AI Agent, Chatbot & RAG Quality Pack** (4 AI Skills, `/mate-flow-ai-agent`, Promptfoo, DeepEval & OTel Trace Auditor). |
@@ -175,7 +175,7 @@ your-project/
 | `npx mate-sdt heal [target]` | Compress raw stack traces (`<error_digest> <= 400t`), map governing spec, and guide the 5-Class Heal vs. Quarantine loop. |
 | `npx mate-sdt cases <module>` | Generate a 4-Quadrant QA Companion Test Case Matrix (`docs/test-cases/TC-<module>.md` & `.csv` with Automated, Manual & Exploratory sections). |
 | `npx mate-sdt audit [dir]` | Scan test codebase for M.A.T.E. anti-patterns (`waitForTimeout`, `sleep`, `.only`, DIP violations) and compute Health Score (`A`–`F`). |
-| `npx mate-sdt k6 [script]` | Execute Grafana k6 performance suite inside an isolated container sandbox (**Podman** or **Docker**) or natively on host, validating `<performance_oracles>`. |
+| `npx mate-sdt k6 [script]` | Execute Grafana k6 performance suite via container runner (**Podman** or **Docker**) or natively on host, validating `<performance_oracles>`. |
 | `npx mate-sdt charter <module>` | Generate a timestamped human Exploratory Testing Charter (SBTM) in `tests/charters/`. |
 | `npx mate-sdt bug <module>` | Generate a Structured Bug Report linked to broken spec invariants in `docs/bugs/`. |
 | `npx mate-sdt waiver <module>` | Generate a Formal Release Waiver in `specs/waivers/` when a release verdict is `[CONCERNS]`. |
