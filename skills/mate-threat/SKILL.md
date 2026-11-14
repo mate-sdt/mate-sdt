@@ -43,7 +43,10 @@ This skill is responsible for **Pillar T (Threat & Trash)** of the M.A.T.E. Meth
 
 ---
 
-## ⚡ Running Adversarial Suites
+## ⚡ Boilerplates & References
+
+*   **Threat Spec Boilerplate:** [`resources/threat-spec.template.ts`](./resources/threat-spec.template.ts) (Concurrency, double-submit, fuzzing, and BOLA probes).
+*   **Adversarial & Fuzzing Guide:** [`references/adversarial-fuzzing-and-concurrency.md`](./references/adversarial-fuzzing-and-concurrency.md).
 
 Execute the threat test suite using Playwright:
 ```bash

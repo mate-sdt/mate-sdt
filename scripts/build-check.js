@@ -94,6 +94,8 @@ const REQUIRED_FILES = [
   'skills/mate-assert-api/SKILL.md',
   'skills/mate-assert-api/resources/base-api-client.template.ts',
   'skills/mate-threat/SKILL.md',
+  'skills/mate-threat/resources/threat-spec.template.ts',
+  'skills/mate-threat/references/adversarial-fuzzing-and-concurrency.md',
   'skills/mate-performance-k6/SKILL.md',
   'skills/mate-performance-k6/resources/k6-load.template.js',
   'skills/mate-explore/SKILL.md',
