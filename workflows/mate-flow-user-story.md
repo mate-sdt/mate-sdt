@@ -98,6 +98,12 @@ flowchart LR
    - **Total Test Cases Designed (`N` across `Happy`, `Border`, `Negative`, `State`):** Breakdown of `[AUTOMATE_UI]`, `[AUTOMATE_API]`, `[MANUAL_TEST]` (with rationale), and `[EXPLORATORY_CHARTER]`.
    - **Passing Automated Tests (`✅ PASS`):** List of verified working scenarios.
    - **Failing Tests Exposing Real Bugs (`⚠️ KNOWN FAIL — test.fail()`):** Explicit callout of which User Story requirements failed, the generated `docs/bugs/BUG-*.md` file paths, and the exact `test.fail()` guards added to the suite.
+3. **Mandatory Next Steps Recommendation:**
+   Never conclude with only the summary. Conclude by recommending the logical next step:
+   - Option A: Run the tailored exploratory charter recommended in `docs/test-cases/TC-<module>.md` (`npx mate-sdt charter <module>`).
+   - Option B: Add adversarial Threat & Concurrency tests (`tests/threats/`) or k6 performance tests (`/mate-flow-performance`).
+   - Option C: Advance to the next unautomated User Story / Module in `MATE-PROJECT-MAP.md`.
+   - Option D: If this was the last story of the sprint/milestone, offer to mark the execution plan completed and wrap up.
 
 ---
 

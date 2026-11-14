@@ -58,6 +58,12 @@ Its purpose is to ensure that any software project implements a quality architec
    > 4. Provide DOM Snippets or Selectors Manually.
 8. **Skill Synergy & Lifecycle Routing:**  
    Orchestrates the **20 M.A.T.E. Skills** (16 Core + 4 AI Agent/RAG Pack) and **8 End-to-End Workflows** so the exact right skill activates at the exact right moment.
+9. **Mandatory Next-Logical-Step Recommendation Mandate:**  
+   - **Never End Abruptly:** Upon concluding ANY QA task, verification run, test creation, or failure triage, the agent **MUST NEVER stop with just a report or a dead end**.
+   - **Propose the Next Logical Step:** Inspect `MATE-PROJECT-MAP.md` (active modules, DRAFT/REVIEW specs, coverage gaps) and the active execution plan (`.mate/exec-plans/active/`). Present 1–3 prioritized, concrete next steps based on reality, not generic boilerplate:
+     - *If a module's tests were automated* ➔ Recommend: 1) adding adversarial Threat/Chaos tests (`tests/threats/`) or boundary fuzzing, 2) running a time-boxed Exploratory Charter (`npx mate-sdt charter <mod>`), or 3) advancing to the next P0/P1 module.
+     - *If a bug was reported* ➔ Recommend: notifying the dev team, verifying workarounds, or moving to the next unblocked user story.
+     - *If the entire milestone/wave is complete* ➔ Explicitly offer to mark the execution plan as completed (`.mate/exec-plans/completed/`), celebrate the milestone, and ask if the user wants to start the next feature or conclude the session.
 
 ---
 
@@ -138,7 +144,6 @@ project-root/
 - **Validate Specs:** `npx mate-sdt validate`
 - **Generate Test Case Matrix (`.md` + `.csv`):** `npx mate-sdt cases <module>` (saves to `docs/test-cases/`)
 - **Audit Test Suite Health (`A`–`F`):** `npx mate-sdt audit`
-- **Run Mutation Suite (`>=85%`):** `npx mate-sdt mutate`
 - **Run k6 Performance Suite:** `npx mate-sdt k6 tests/nfr/load.k6.js`
 - **Generate Charter / Bug / Waiver:** `npx mate-sdt charter <mod>` | `npx mate-sdt bug <mod>` | `npx mate-sdt waiver <mod>`
 - **References:**

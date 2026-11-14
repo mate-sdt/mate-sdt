@@ -31,8 +31,12 @@ Categorize each failure using the M.A.T.E. matrix with explicit confidence level
   1. Invoke `mate-maintenance` and run `npx mate-sdt audit`.
   2. Eliminate arbitrary sleeps, isolate test data in fixtures, and restore a `Health Score: A`.
 
-## Step 4: Update `MATE-PROJECT-MAP.md` (`mate-core`)
-Append newly discovered coverage gaps, flaky test patterns, and the updated Test Suite Health Score to Section 7 of `MATE-PROJECT-MAP.md`.
+## Step 4: Update `MATE-PROJECT-MAP.md` & Recommend Next Steps (`mate-core`)
+1. Append newly discovered coverage gaps, flaky test patterns, and the updated Test Suite Health Score to Section 7 of `MATE-PROJECT-MAP.md`.
+2. **Mandatory Next Steps Recommendation:**
+   - If an application bug was isolated: Propose notifying developers, checking for regression impact, or moving to the next unblocked user story.
+   - If flaky tests were healed: Propose running the full suite or advancing to the next priority module in `MATE-PROJECT-MAP.md`.
+   - If all issues are resolved: Explicitly offer to mark the triage plan complete in `.mate/exec-plans/completed/`.
 
 ---
 

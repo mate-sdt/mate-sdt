@@ -81,7 +81,7 @@ Synthesize the discussion into an immediate, actionable output using the format 
 | *"The test suite is super flaky and takes 40 minutes."* | ⚡ Automation + 🛡️ Threat | `mate-maintenance` + `mate-triage` ➔ `/mate-flow-brownfield` | Run `npx mate-sdt audit` |
 | *"We are building an AI agent / RAG chatbot and don't know how to test it."* | 🤖 AI Specialist + 🧉 Tony | `mate-ai-dataset` + `mate-ai-evals` ➔ `/mate-flow-ai-agent` | Run `npx mate-sdt setup-ai` & `npx mate-sdt dataset <agent>` |
 | *"Should we automate this complex multi-step checkout or test it manually?"* | 🧉 Tony + 🕵️ Exploratory + ⚡ Automation | `mate-story-testcases` (Automate vs. Manual vs. Charter split) | Run `npx mate-sdt cases checkout` |
-| *"Production crashed because of a concurrency / race condition bug."* | 🛡️ Threat + ⚡ Automation | `mate-threat` + `mate-triage` ➔ `/mate-flow-triage` | Run `npx mate-sdt bug <mod>` & `npx mate-sdt mutate` |
+| *"Production crashed because of a concurrency / race condition bug."* | 🛡️ Threat + ⚡ Automation | `mate-threat` + `mate-triage` ➔ `/mate-flow-triage` | Run `npx mate-sdt bug <mod>` & `tests/threats/` |
 
 ---
 

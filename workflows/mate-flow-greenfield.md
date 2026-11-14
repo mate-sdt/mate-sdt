@@ -65,6 +65,11 @@ Execute this step-by-step workflow when building or testing a new feature from s
    npx mate-sdt charter [module]
    ```
 2. After the human Quality Engineer completes exploratory & WCAG 2.1 AA testing, run the **5-Gate Harness Verification Loop** (`npx mate-sdt gate`) and record the formal Release Verdict (`[PASS]`, `[CONCERNS]` with `npx mate-sdt waiver [module]`, or `[FAIL]`) in `MATE-PROJECT-MAP.md`.
+3. **Mandatory Next Steps Recommendation:**
+   Conclude by presenting the next logical actions:
+   - If verdict is `[PASS]`: Offer to advance to the next priority module or deploy to staging.
+   - If verdict is `[CONCERNS]`: Offer to document formal waivers via `npx mate-sdt waiver [module]`.
+   - If verdict is `[FAIL]`: Offer to inspect defects in `docs/bugs/` or run `npx mate-sdt heal`.
 
 ---
 
