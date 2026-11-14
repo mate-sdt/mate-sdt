@@ -205,7 +205,7 @@ If the M.A.T.E. Method helps you or your team build rock-solid, spec-driven qual
 
 [![Buy Me a Mate](https://img.shields.io/badge/Ko--fi-Buy_Me_a_Mate_🧉-ff5e5b?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/crespoantonio)
 
-* 💼 **LinkedIn:** [Antonio "Tony" Crespo](https://linkedin.com/in/crespoantonio)
+* 💼 **LinkedIn:** [Antonio "Tony" Crespo](https://www.linkedin.com/in/antonio-crespo89/)
 * 📦 **NPM Package:** [mate-sdt](https://www.npmjs.com/package/mate-sdt)
 
 Licensed under the [MIT License](./LICENSE).
