@@ -134,7 +134,7 @@ npx mate-sdt gate --json
 2. **3 Harness Loop Topologies:**
    - **Linear Harness:** Deterministic single-pass (`npx mate-sdt validate`, `npx mate-sdt context`, `npx mate-sdt status`).
    - **Closed-Loop Verification Harness (`npx mate-sdt gate --loop`):** Runs all 5 gates up to `max_iterations = 5`, persisting `[SELF-CORRECTION]` payloads in `.mate/harness-state.json`.
-   - **Safety-Guarded Harness:** `blockDestructiveCommands` + rootless Podman for `mutate`, `k6`, and `redteam`.
+   - **Safety-Guarded Harness:** `blockDestructiveCommands` + rootless Podman/Docker sandbox for `k6` load testing, fuzzing, and adversarial race simulation.
 3. **Continuous Entropy & Doc-Gardening GC (`npx mate-sdt gc`):**
    - Scans for unindexed artifacts, broken cross-links, unmapped `INV-XX` invariants, duplicated test helpers, bloated Page Objects (`> 300` lines), stale `test.fail()` markers, and expired sessions.
    - Generates `docs/QUALITY_SCORE.md` (`A`–`F` per module) and updates `.mate/exec-plans/tech-debt-tracker.md`.
