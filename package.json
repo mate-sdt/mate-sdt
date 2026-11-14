@@ -38,6 +38,10 @@
     "url": "git+https://github.com/mate-sdt/mate-sdt.git"
   },
   "license": "MIT",
+  "funding": {
+    "type": "ko-fi",
+    "url": "https://ko-fi.com/crespoantonio"
+  },
   "author": "Antonio \"Tony\" Crespo (Un Junior En Apuros)",
   "type": "commonjs",
   "bin": {

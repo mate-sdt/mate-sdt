@@ -7,6 +7,7 @@
 [![Node.js >= 18](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen?style=flat-square)](https://nodejs.org)
 [![Mutation Threshold](https://img.shields.io/badge/Stryker_Mutation-%3E%3D85%25-orange?style=flat-square)](https://stryker-mutator.io/)
 [![Container Engine](https://img.shields.io/badge/Sandbox-Podman_%7C_Docker_%7C_Host-892ca0?style=flat-square)](#-cli-commands-reference)
+[![Support on Ko-fi](https://img.shields.io/badge/Ko--fi-Buy_Me_a_Mate_🧉-ff5e5b?style=flat-square&logo=kofi&logoColor=white)](https://ko-fi.com/crespoantonio)
 
 > *"AI-generated implementation code is ephemeral and disposable.  
 > The specification, deterministic oracles, and human critical thinking are the only permanent assets of software engineering."*  
@@ -196,7 +197,15 @@ your-project/
 
 ---
 
-## 📄 License & Authorship
+## ☕ Support & Authorship
 
 Created by **Antonio "Tony" Crespo** — Founder of **Un Junior En Apuros**.  
+
+If the M.A.T.E. Method helps you or your team build rock-solid, spec-driven quality in the AI era, consider supporting its independent open-source development:
+
+[![Buy Me a Mate](https://img.shields.io/badge/Ko--fi-Buy_Me_a_Mate_🧉-ff5e5b?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/crespoantonio)
+
+* 💼 **LinkedIn:** [Antonio "Tony" Crespo](https://linkedin.com/in/crespoantonio)
+* 📦 **NPM Package:** [mate-sdt](https://www.npmjs.com/package/mate-sdt)
+
 Licensed under the [MIT License](./LICENSE).
