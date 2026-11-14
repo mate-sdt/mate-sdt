@@ -55,7 +55,7 @@ For each module in priority order (`P0` ➔ `P1` ➔ `P2`):
 | **API & Contract Suite** | `tests/api/` | ~50% | Schema validation, `400/401/403/409/422` matrices, boundary combinations, BOLA checks | Every PR & Nightly |
 | **UI End-to-End (E2E)** | `tests/e2e/` | ~30% | P0 Smoke flows (`@smoke`), critical multi-step user journeys, visual/DOM state invariants | Smoke on every deploy; Full E2E on PR/Merge |
 | **Adversarial & Chaos** | `tests/threats/` | ~10% | Multi-actor race conditions (`playwright-cli -s=`), double-submit idempotency, payload fuzzing | Nightly & Pre-Release |
-| **Performance Oracles (k6)** | `tests/nfr/` | ~5% | Latency SLAs (`p95`, `p99`) and throughput checks via rootless Podman (`npx mate-sdt k6`) | Pre-Release / Staging |
+| **Performance Oracles (k6)** | `tests/nfr/` | ~5% | Latency SLAs (`p95`, `p99`) and throughput checks via container sandbox / host (`npx mate-sdt k6`) | Pre-Release / Staging |
 | **Human Exploratory (SBTM)** | `tests/charters/` | ~5% | UX ergonomics, WCAG 2.1 AA accessibility, complex cross-device edge cases | Per Feature / Release Gate |
 
 ---

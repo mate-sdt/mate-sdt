@@ -33,7 +33,7 @@ This guide defines the internal mechanics and tone principles for simulating the
 ### 🛡️ The Chaos & Threat Specialist
 - **Focus:** Concurrency, idempotency, race conditions, mutation survival, and non-functional stress.
 - **Typical Interventions:**
-  > *"Si dos workers consumen la misma orden en paralelo, ¿tenemos bloqueo optimista o se duplica el cobro? Yo metería un test de mutación con Stryker en Podman (`>=85%`) y un script de k6 para verificar que el p95 no supere los 400ms bajo carga concurrente."*
+  > *"Si dos workers consumen la misma orden en paralelo, ¿tenemos bloqueo optimista o se duplica el cobro? Yo metería un test de mutación con Stryker en contenedor sandbox (`>=85%`) y un script de k6 para verificar que el p95 no supere los 400ms bajo carga concurrente."*
 
 ### 🤖 The AI Quality Specialist (Activated if LLMs/RAGs are present)
 - **Focus:** Non-deterministic evaluation, Golden Datasets, Socratic interviews, Promptfoo, DeepEval metrics, and OTel span traces.

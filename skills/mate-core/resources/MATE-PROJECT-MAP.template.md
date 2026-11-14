@@ -12,8 +12,8 @@ This living document is the **single source of truth** for AI coding agents and 
 - **Primary Language:** `TypeScript` *(or Java / Python — see stack references)*
 - **UI / E2E Framework:** `Playwright (@playwright/test)`
 - **API / Contract Framework:** `Playwright APIRequestContext / SuperTest`
-- **Performance / NFR Engine:** `Grafana k6 (via rootless Podman)`
-- **Mutation Testing Engine:** `Stryker Mutator (via rootless Podman, threshold >= 85%)`
+- **Performance / NFR Engine:** `Grafana k6 (via npx mate-sdt k6: Podman, Docker, or native host)`
+- **Mutation Testing Engine:** `Stryker Mutator (via npx mate-sdt mutate: Podman, Docker, or native host, threshold >= 85%)`
 - **Environments:**
   - `local / dev`: `http://localhost:3000` (Max k6 VUs: `50`)
   - `staging`: `https://staging.example.com` (Max k6 VUs: `500`)
@@ -75,8 +75,8 @@ Non-negotiable mathematical and business rules that must never be violated under
 | **Audit Test Suite Health (A–F)** | `npx mate-sdt audit` |
 | **Run E2E & API Tests** | `npx playwright test` |
 | **Run P0 Smoke Invariants** | `npx playwright test --grep @p0` |
-| **Run Mutation Suite (Podman)** | `npx mate-sdt mutate` |
-| **Run k6 Performance Suite (Podman)** | `npx mate-sdt k6 tests/nfr/load.k6.js` |
+| **Run Mutation Suite** | `npx mate-sdt mutate` |
+| **Run k6 Performance Suite** | `npx mate-sdt k6 tests/nfr/load.k6.js` |
 | **Create Exploratory Charter** | `npx mate-sdt charter <module>` |
 | **Create Bug Report** | `npx mate-sdt bug <module>` |
 | **Create Release Waiver** | `npx mate-sdt waiver <module>` |
@@ -87,7 +87,7 @@ Non-negotiable mathematical and business rules that must never be violated under
 
 - **Latest Release Verdict:** `[PASS]` | Sprint: `Sprint-01` | Date: `YYYY-MM-DD`
 - **Test Suite Health Score:** `A` (verified via `npx mate-sdt audit`)
-- **Mutation Testing Score:** `87.5%` (Stryker Mutator via Podman, threshold `>= 85%`)
+- **Mutation Testing Score:** `87.5%` (Stryker Mutator via `npx mate-sdt mutate`, threshold `>= 85%`)
 - **Active Release Waivers:** `None` (`./specs/waivers/`)
 - **Identified Gaps & Flakiness Radar:**
   - *None recorded yet. (`mate-triage` and `mate-maintenance` append discovered gaps here).*

@@ -3,10 +3,10 @@ name: mate-flow-performance
 description: >-
   End-to-End M.A.T.E. Performance & NFR Workflow: Translates <performance_oracles> SLAs
   from MATE-SPEC.md into Grafana k6 load/stress/spike scripts and executes them inside
-  rootless Podman containers (npx mate-sdt k6).
+  container sandboxes (Podman/Docker) or native host (npx mate-sdt k6).
 ---
 
-# ⚡ E2E Workflow: Performance Oracles with k6 & Podman (`/mate-flow-performance`)
+# ⚡ E2E Workflow: Performance Oracles with k6 (`/mate-flow-performance`)
 
 Execute this workflow to verify Non-Functional Requirements (latency SLAs, throughput, error rates, and spike resilience).
 
@@ -15,10 +15,10 @@ Execute this workflow to verify Non-Functional Requirements (latency SLAs, throu
 ## Step 1: Verify Performance Oracles & VU Limits (`mate-performance-k6`)
 
 > ⚠️ **Pre-Flight Check (Engine Readiness):**  
-> Check if Podman or native `k6` is available in PATH. If NEITHER is installed, **STOP IMMEDIATELY** and ask the user:  
-> *"We don't have Grafana k6 or a container engine (Podman) available in this environment. How would you like to proceed?"*  
+> Check if a container sandbox (Podman or Docker) or native `k6` is available in PATH. If NEITHER is installed, **STOP IMMEDIATELY** and ask the user:  
+> *"We don't have Grafana k6 or a container engine (Podman/Docker) available in this environment. How would you like to proceed?"*  
 > 1. **(Recommended) Install native `k6`:** `winget install k6` (Windows), `brew install k6` (macOS), `sudo apt install k6` (Linux).  
-> 2. **Install rootless Podman (for isolated container sandboxing):** `winget install RedHat.Podman-Desktop` / `brew install podman`.  
+> 2. **Install a container sandbox runtime:** `winget install RedHat.Podman-Desktop` / `brew install podman` or install Docker Desktop.  
 > 3. **Skip Performance Testing for now:** Author the script and defer execution to CI/CD pipelines.
 
 1. Read `MATE-PROJECT-MAP.md` and `specs/[module].mate-spec.md`.

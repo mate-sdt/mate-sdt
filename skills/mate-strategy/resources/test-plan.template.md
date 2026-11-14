@@ -28,7 +28,7 @@
 | **2. P0 Smoke Suite** | `npm run test:smoke` | All critical Golden Paths green | ⏳ Pending |
 | **3. 4-Quadrant UI & API** | `npm run test:e2e && npm run test:api` | Happy, Border, Negative & State Transitions | ⏳ Pending |
 | **4. Pillar T Threats** | `npm run test:threats` | Concurrency, idempotency & fuzzing checks | ⏳ Pending |
-| **5. Performance (k6)** | `npx mate-sdt k6 tests/nfr/[scope].k6.js` | `p95` / `p99` SLAs verified in Podman | ⏳ Pending |
+| **5. Performance (k6)** | `npx mate-sdt k6 tests/nfr/[scope].k6.js` | `p95` / `p99` SLAs verified via container sandbox / k6 | ⏳ Pending |
 | **6. Exploratory Charter** | `tests/charters/CHR-*-[scope].md` | UX ergonomics & WCAG 2.1 AA accessibility | ⏳ Pending |
 | **7. Codebase Health Gate** | `npx mate-sdt audit` | Health Score Grade `A` (zero sleeps / `.only`) | ⏳ Pending |
 

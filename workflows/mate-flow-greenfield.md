@@ -2,7 +2,7 @@
 name: mate-flow-greenfield
 description: >-
   End-to-End M.A.T.E. Greenfield Workflow: Orchestrates a new feature from initial idea
-  to validated MATE-SPEC.md, SOLID Playwright/API test generation, Podman Mutation Testing (>=85%),
+  to validated MATE-SPEC.md, SOLID Playwright/API test generation, Container Sandboxed Mutation Testing (>=85%),
   and Human Exploratory Charter sign-off.
 ---
 
@@ -51,9 +51,9 @@ Execute this step-by-step workflow when building or testing a new feature from s
    npx mate-sdt audit
    ```
 
-## Step 4: Pillar T — Adversarial Threats & Podman Mutation (`mate-threat`)
+## Step 4: Pillar T — Adversarial Threats & Mutation Testing (`mate-threat`)
 1. Implement concurrency, double-click idempotency, and payload fuzzing suites in `tests/threats/`.
-2. Execute Stryker Mutation Testing inside a rootless Podman container:
+2. Execute Stryker Mutation Testing via the container runner:
    ```bash
    npx mate-sdt mutate
    ```

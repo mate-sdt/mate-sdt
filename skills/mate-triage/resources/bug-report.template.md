@@ -13,7 +13,7 @@
 ---
 
 ## 🌍 Environment & Context
-- **Environment:** `Local Podman / QA / Staging`
+- **Environment:** `Local Container / QA / Staging`
 - **Commit / PR / Version:** `[git-sha / vX.Y.Z]`
 - **Browser / Device / Runtime:** `[e.g., Chromium 130 / Node 20 / API]`
 

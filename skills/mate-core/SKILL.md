@@ -76,8 +76,8 @@ Its purpose is to ensure that any software project implements a quality architec
 | **`mate-pw-codegen`** | **Pillar A (CLI Codegen)** | Translating `playwright-cli` locators, `state-save` auth, and `route` network mocks into SOLID Page/Component Objects and running/debugging Playwright specs. | `mate-assert-playwright` + `mate-pw-recon` |
 | **`mate-pw-forensics`** | **Pillar T/E & Triage (CLI)** | Multi-actor sessions (`-s=actor1`, `-s=actor2`), `tracing-start`/`stop`, 60fps `video-start` recordings, and PR/Jira visual attachments. | `mate-threat` + `mate-explore` + `mate-triage` |
 | **`mate-assert-api`** | **Pillar A (API Contracts)** | Translating OpenAPI/Swagger or spec contracts into typed `BaseApiClient` classes and schema/status/auth matrices. | `mate-model` + `mate-threat` |
-| **`mate-threat`** | **Pillar T (Chaos & Mutation)** | Concurrency, race conditions, idempotency, fuzzing, and Stryker Mutation (`>= 85%`) in rootless Podman (`npx mate-sdt mutate`). | `mate-pw-forensics` + `mate-assert-api` |
-| **`mate-performance-k6`** | **Pillar A/T (NFR - k6)** | Translating `<performance_oracles>` SLAs into Grafana k6 scripts executed in rootless Podman (`npx mate-sdt k6`). | `mate-model` + `mate-threat` |
+| **`mate-threat`** | **Pillar T (Chaos & Mutation)** | Concurrency, race conditions, idempotency, fuzzing, and Stryker Mutation (`>= 85%`) in container sandbox / host (`npx mate-sdt mutate`). | `mate-pw-forensics` + `mate-assert-api` |
+| **`mate-performance-k6`** | **Pillar A/T (NFR - k6)** | Translating `<performance_oracles>` SLAs into Grafana k6 scripts executed in container sandbox / native host (`npx mate-sdt k6`). | `mate-model` + `mate-threat` |
 | **`mate-explore`** | **Pillar E (Explore)** | Human SBTM exploratory charters (`npx mate-sdt charter`), WCAG 2.1 AA audits, Release Waivers (`npx mate-sdt waiver`), and Release Verdicts. | `mate-pw-forensics` + `mate-triage` |
 | **`mate-triage`** | **Day-2 Operations** | Classifying CI or live test failures (Real Bug vs. Flaky vs. Env vs. Drift) and generating spec-linked Bug Reports (`npx mate-sdt bug`). | `mate-pw-forensics` + `mate-maintenance` |
 | **`mate-maintenance`** | **Day-2 Operations** | Auditing test codebase health (`A`–`F`) via `npx mate-sdt audit` to eliminate `waitForTimeout`, `.only`, and DIP violations. | `mate-assert-playwright` + `mate-triage` |
@@ -139,8 +139,8 @@ project-root/
 - **Validate Specs:** `npx mate-sdt validate`
 - **Generate Test Case Matrix (`.md` + `.csv`):** `npx mate-sdt cases <module>` (saves to `docs/test-cases/`)
 - **Audit Test Suite Health (`A`–`F`):** `npx mate-sdt audit`
-- **Run Podman Mutation (`>=85%`):** `npx mate-sdt mutate`
-- **Run Podman k6 Performance:** `npx mate-sdt k6 tests/nfr/load.k6.js`
+- **Run Mutation Suite (`>=85%`):** `npx mate-sdt mutate`
+- **Run k6 Performance Suite:** `npx mate-sdt k6 tests/nfr/load.k6.js`
 - **Generate Charter / Bug / Waiver:** `npx mate-sdt charter <mod>` | `npx mate-sdt bug <mod>` | `npx mate-sdt waiver <mod>`
 - **References:**
   - [`resources/MATE-PROJECT-MAP.template.md`](./resources/MATE-PROJECT-MAP.template.md)

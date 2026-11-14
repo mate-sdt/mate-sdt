@@ -14,7 +14,7 @@
 | :--- | :---: | :---: | :--- |
 | **`[BUG - INVARIANT BROKEN]`** | `0` | 🔴 Blocks Release (`FAIL`) | File `npx mate-sdt bug <module>` |
 | **`[FLAKY TEST]`** | `0` | 🟡 Tech Debt | Quarantine & refactor via `mate-maintenance` |
-| **`[ENVIRONMENT / INFRA]`** | `0` | 🟡 Blocks Pipeline | Escalate to DevOps / Check Podman containers |
+| **`[ENVIRONMENT / INFRA]`** | `0` | 🟡 Blocks Pipeline | Escalate to DevOps / Check container sandbox |
 | **`[TEST DATA / CONTRACT DRIFT]`** | `0` | 🟡 Maintenance | Sync fixtures / Page Objects with `MATE-SPEC.md` |
 
 ---

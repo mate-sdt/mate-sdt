@@ -36,9 +36,9 @@ Then prescribe the exact workflow, skills, and CLI commands from this **Universa
 | **Backend REST / GraphQL API** | **Level 3: Swagger / OpenAPI Exists** (Contract exists, but zero contract/BOLA/fuzzing tests) | **`/mate-flow-api-contract`** | `mate-model` ➔ `mate-assert-api` (`BaseApiClient` + `2xx/400/401/403/409/422` matrix) ➔ `mate-threat` | `npx mate-sdt cases <api-mod>`<br>`npm run test:api` |
 | **AI Agent (MCP/Tools), Chatbot, or RAG** | **Level 0: Zero Golden Dataset & Zero Evals** (Only a prompt, bot URL, or PDF docs exist) | **`/mate-flow-ai-agent`** | `mate-ai-dataset` (**5-Dimension Socratic Interview** + **5-Seed Human Gate** + Synthetic Evolutions) ➔ `mate-ai-evals` (Promptfoo + DeepEval) ➔ `mate-ai-redteam` ➔ `mate-ai-observability` (OTel/Langfuse/Phoenix traces) | `npx mate-sdt setup-ai`<br>`npx mate-sdt dataset <agent>`<br>`npm run eval:promptfoo`<br>`npm run eval:redteam`<br>`npm run eval:traces` |
 | **AI Agent / RAG System** | **Level 3: Docs / Existing Dataset & Production Traces** (Langfuse / Arize Phoenix / OpenTelemetry) | **`/mate-flow-ai-agent`** | `mate-ai-observability` (Trace forensics & fault isolation: `[RETRIEVER_DEFECT]` vs `[GENERATOR_DEFECT]`) ➔ `mate-ai-evals` ➔ `mate-ai-redteam` | `npm run eval:traces`<br>`npm run eval:deepeval`<br>`npx mate-sdt bug <agent>` |
-| **Greenfield Feature (Any Stack)** | **Level 5: Spec-First Idea** (Building a brand-new module before code exists) | **`/mate-flow-greenfield`** | `mate-model` (`*.mate-spec.md` + Forbidden Transitions) ➔ `mate-assert-playwright` / `mate-assert-api` ➔ `mate-threat` (`>=85%` Podman mutation) ➔ `mate-explore` | `npx mate-sdt validate`<br>`npx mate-sdt mutate`<br>`npx mate-sdt charter <mod>` |
+| **Greenfield Feature (Any Stack)** | **Level 5: Spec-First Idea** (Building a brand-new module before code exists) | **`/mate-flow-greenfield`** | `mate-model` (`*.mate-spec.md` + Forbidden Transitions) ➔ `mate-assert-playwright` / `mate-assert-api` ➔ `mate-threat` (`>=85%` container mutation) ➔ `mate-explore` | `npx mate-sdt validate`<br>`npx mate-sdt mutate`<br>`npx mate-sdt charter <mod>` |
 | **Legacy / Brownfield Repo** | **Level 4: Existing Flaky Suite** (Tests full of `waitForTimeout`, `.only`, or raw locators) | **`/mate-flow-triage`** & **`/mate-flow-brownfield`** | `mate-maintenance` (`npx mate-sdt audit`) + `mate-triage` + `mate-pw-forensics` ➔ Refactor to `BasePage` / `BaseComponent` | `npx mate-sdt audit`<br>`npx mate-sdt gate` |
-| **High-Traffic API / Checkout** | **Non-Functional SLA Verification** (Need Load, Stress, Spike, or Soak testing) | **`/mate-flow-performance`** | `mate-performance-k6` (Podman k6 execution enforcing `<performance_oracles>`) | `npx mate-sdt k6 tests/nfr/<script>.k6.js` |
+| **High-Traffic API / Checkout** | **Non-Functional SLA Verification** (Need Load, Stress, Spike, or Soak testing) | **`/mate-flow-performance`** | `mate-performance-k6` (k6 execution via container sandbox / host enforcing `<performance_oracles>`) | `npx mate-sdt k6 tests/nfr/<script>.k6.js` |
 
 ---
 
@@ -49,7 +49,7 @@ When explaining or applying M.A.T.E., always emphasize its **5 Foundational Prin
 1. **The 4 Pillars (`M.A.T.E.`):**
    - **M — Model (`mate-model`):** Model intent, Finite State Machines, and **Explicit Forbidden Transitions** in `specs/[module].mate-spec.md`.
    - **A — Assert (`mate-assert-playwright` & `mate-assert-api`):** OOP & SOLID test architecture (`BasePage`, `BaseComponent`, `BaseApiClient`, `test.extend` DIP fixtures, **zero `waitForTimeout`**).
-   - **T — Threat & Trash (`mate-threat` & `mate-performance-k6`):** Multi-actor concurrency, idempotency, payload fuzzing, k6 SLAs, and Stryker Mutation (`>= 85%`) in rootless Podman.
+   - **T — Threat & Trash (`mate-threat` & `mate-performance-k6`):** Multi-actor concurrency, idempotency, payload fuzzing, k6 SLAs, and Stryker Mutation (`>= 85%`) inside isolated container sandboxes (Podman/Docker) or host.
    - **E — Explore (`mate-explore`):** Human Session-Based Test Management (SBTM) charters, WCAG 2.1 AA accessibility, and formal Release Verdicts (`PASS`, `CONCERNS` + Waiver, `FAIL`).
 2. **Pragmatic Automation vs. Manual vs. Exploratory (`mate-story-testcases`):**
    - **Not everything should be automated!** When given a User Story, M.A.T.E. classifies every scenario into:
@@ -83,8 +83,8 @@ When explaining or applying M.A.T.E., always emphasize its **5 Foundational Prin
 | `npx mate-sdt cases <module>` | Generates the QA Companion Test Case Matrix (`docs/test-cases/TC-<module>.md` & `.csv` with Automated, Manual & Exploratory sections). |
 | `npx mate-sdt validate [path]` | Validates `*.mate-spec.md` files (enforcing YAML frontmatter, 4 XML blocks, Forbidden Transitions, and `INV-XX` IDs). |
 | `npx mate-sdt audit [dir]` | Scans test code for anti-patterns (`waitForTimeout`, `.only`, DIP violations) and computes Health Score (`A`–`F`). |
-| `npx mate-sdt mutate [dir]` | Runs Stryker Mutator (`>= 85%`) inside a rootless Podman container. |
-| `npx mate-sdt k6 [script]` | Runs Grafana k6 performance suite inside a rootless Podman container. |
+| `npx mate-sdt mutate [dir]` | Runs Stryker Mutator (`>= 85%`) inside a container sandbox (Podman, Docker, or native host). |
+| `npx mate-sdt k6 [script]` | Runs Grafana k6 performance suite inside a container sandbox (Podman, Docker, or native host). |
 | `npx mate-sdt charter <module>` | Generates a human Exploratory Testing Charter (SBTM) in `tests/charters/`. |
 | `npx mate-sdt bug <module>` | Generates a Spec-Linked Bug Report in `docs/bugs/`. |
 | `npx mate-sdt waiver <module>` | Generates a Formal Release Waiver in `specs/waivers/` when a release verdict is `[CONCERNS]`. |
