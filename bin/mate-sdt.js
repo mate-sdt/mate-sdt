@@ -31,7 +31,6 @@ const {
   checkStatus,
   analyzeContextEngineering,
   runHarnessGate,
-  runPodmanMutation,
   runPodmanK6,
 } = require('../src/cli/installer');
 const {
@@ -55,7 +54,6 @@ function parseFlags(args) {
     mode: null,
     ide: null,
     dir: null,
-    config: 'stryker.config.json',
     starter: true,
     playwrightCli: false,
     container: null,
@@ -259,10 +257,7 @@ function printHelp() {
     `    ${color('audit [dir]', COLORS.brightGreen, COLORS.bold)}          Scan test codebase for anti-patterns & compute Health Score (A-F)`
   );
   console.log(
-    `    ${color('mutate [dir]', COLORS.brightGreen, COLORS.bold)}         Execute Stryker Mutator (>=85%) inside a rootless Podman container`
-  );
-  console.log(
-    `    ${color('k6 [script]', COLORS.brightGreen, COLORS.bold)}          Execute Grafana k6 performance suite inside a rootless Podman container`
+    `    ${color('k6 [script]', COLORS.brightGreen, COLORS.bold)}          Execute Grafana k6 performance suite inside a container sandbox (Podman/Docker/Host)`
   );
   console.log(
     `    ${color('charter <module>', COLORS.brightGreen, COLORS.bold)}     Create a human Exploratory Testing Charter (SBTM) in tests/charters/`
@@ -434,7 +429,7 @@ async function handleInstall(flags) {
 
         containerRuntime = await promptSelect(
           rl,
-          'Select your container sandbox runtime for mutation testing (Stryker) and performance (k6):',
+          'Select your container sandbox runtime for performance testing (Grafana k6):',
           [
             {
               label: 'Podman (Recommended: Rootless, daemonless, free enterprise container sandbox)',
@@ -445,7 +440,7 @@ async function handleInstall(flags) {
               value: 'docker',
             },
             {
-              label: 'None (Direct host execution — run Stryker and k6 on bare host without containers)',
+              label: 'None (Direct host execution — run k6 on bare host without containers)',
               value: 'none',
             },
           ],
@@ -1087,7 +1082,6 @@ function handleStatus(flags) {
 
   console.log(`  • Living Architecture Map (MATE-PROJECT-MAP.md): ${checkMark(status.hasProjectMap)}`);
   console.log(`  • Specifications Directory (specs/):             ${checkMark(status.hasSpecsDir)}`);
-  console.log(`  • Stryker Mutation Config (stryker.config.json): ${checkMark(status.hasStrykerConfig)}`);
   console.log(`  • Antigravity Skills (.agents/skills/mate-*):    ${checkMark(status.hasAntigravitySkills)}`);
   console.log(`  • Claude Code Skills/Commands (.claude/):        ${checkMark(status.hasClaudeCommands)}`);
   console.log(`  • Cursor Rules (.cursor/rules/):                 ${checkMark(status.hasCursorRules)}`);
@@ -1204,9 +1198,6 @@ async function main() {
     case 'heal':
     case 'triage':
       handleHeal(flags);
-      break;
-    case 'mutate':
-      process.exit(runPodmanMutation(flags.dir || flags.positional[1] || '.', flags.config));
       break;
     case 'k6':
       process.exit(runPodmanK6(flags.positional[1] || 'tests/nfr/order-load.k6.js', flags.dir || '.'));

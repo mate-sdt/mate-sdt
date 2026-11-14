@@ -112,7 +112,7 @@ Pillar **Threat & Trash** injects professional tester malice directly into the s
 - **Threat Modeling for Testers:** How can a malicious actor, race condition, or network partition break this feature?
 - **Concurrency & Idempotency:** Compulsive double-clicks within 50ms, duplicate webhook storms, and simultaneous state mutations.
 - **Data Trash & Fuzzing:** 10MB payloads, Cyrillic/RTL scripts, emojis in numeric inputs, SQL/NoSQL injections, and Prompt Injection payloads in AI features.
-- **Mandatory Mutation Testing & Container Sandboxing:** Subjecting the test suite itself to mutation testing (Stryker Mutator) inside **isolated container sandboxes** (using rootless containers like Podman by default to eliminate root-daemon vulnerabilities and host state leakage). If we mutate production logic and no test fails, the tests are smoke and mirrors. **M.A.T.E. Threshold: Mutation Score >= 85%**.
+- **Adversarial Engineering & Container Sandboxing:** Subjecting the system to adversarial threat testing (concurrency, idempotency, fuzzing, BOLA) and performance load testing (Grafana k6) inside **isolated container sandboxes** (using containers like Podman or Docker by default to eliminate root-daemon vulnerabilities and host state leakage). If we do not probe adversarial scenarios, the tests are smoke and mirrors.
 
 ---
 
@@ -187,7 +187,8 @@ author: Tony Crespo (@crespoantonio)
 
 - `THR-01` (Race Condition): Double-click on "Confirm Order" within 50ms must be strictly idempotent and create exactly ONE order.
 - `THR-02` (Concurrent Cancellation): User cancels order at the exact millisecond driver scans pickup QR; driver state transition prevails.
-- `THR-MUTATION`: Mutation Score >= 85% verified with Stryker Mutator in container sandbox.
+- `THR-CONCURRENCY`: Double-click and race condition idempotency verified.
+- `THR-FUZZING`: Payload fuzzing and boundary rejection verified.
   </threat_scenarios>
 
 <exploratory_charters>
@@ -215,7 +216,7 @@ sequenceDiagram
     QE->>PO: 1. Co-design *.mate-spec.md (Model + Assert + Threat)
     QE->>Agent: 2. Feed validated Spec to AI Agent (Spec-Driven Build)
     Agent->>Harness: 3. Agent builds SOLID code & Playwright suites in Container Sandbox
-    Harness-->>QE: 4. Harness runs Spec Linter, Invariants & Stryker Mutation (>=85%)
+    Harness-->>QE: 4. Harness runs Spec Linter, Invariants & Threat Scenarios
     alt Any Invariant Fails or Mutants Survive (>15%)
         QE->>Agent: Automated rejection with diagnostic stack trace
     else All Deterministic Oracles Pass

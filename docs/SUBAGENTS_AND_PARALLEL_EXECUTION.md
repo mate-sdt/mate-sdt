@@ -116,4 +116,4 @@ The following M.A.T.E. workflows explicitly flag steps that can be run concurren
 3. **`/mate-flow-ai-agent`:**
    - *Phase 2 & 3:* Promptfoo functional evals and OWASP Red-Teaming run concurrently in separate sub-agent execution runs.
 4. **`/mate-flow-brownfield` & `/mate-flow-triage`:**
-   - Full suite execution and Stryker mutation testing run in isolated runner sub-agents without polluting the parent transcript.
+   - Full suite execution and performance load testing run in isolated runner sub-agents without polluting the parent transcript.

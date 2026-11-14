@@ -3,7 +3,7 @@ name: mate-triage
 description: >-
   Specialist in Day-2 QA Operations (Failure Triage, Known-Failure Tracking & Bug Reporting) of the M.A.T.E. Method.
   USE WHEN: The user pastes a raw stack trace, terminal error output, Playwright `TimeoutError` / `StrictModeViolation`,
-  assertion mismatch, HTTP `4xx/5xx` contract error, TS compiler error in `src/`/`tests/`, or k6/Stryker/Podman crash,
+  assertion mismatch, HTTP `4xx/5xx` contract error, TS compiler error in `src/`/`tests/`, or k6/container crash,
   OR says "fix this", "heal this test", "why did this fail?", OR invokes `/mate-flow-triage` / `npx mate-sdt heal`.
   Compresses the noisy crash into `<error_digest>` (<= 400 tokens), diagnoses via live forensics, and applies the
   5-Class "Heal vs. Quarantine" Decision Matrix without ever greenwashing a broken requirement.

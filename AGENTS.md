@@ -13,7 +13,7 @@
 | **CLI Router** | `bin/mate-sdt.js` | Parses flags and routes commands (`install`, `init`, `context`, `session`, `gate`, `audit`, `heal`, `gc`, etc.) |
 | **Project & IDE Installer** | `src/cli/installer.js`<br>`src/cli/ide-scaffold.js` | Project orchestrator, generates consumer `AGENTS.md`, `.cursor/rules/`, `.windsurf/`, `.agents/skills/`, and package scaffolds |
 | **Artifact Generators** | `src/cli/generators.js` | Generates Test Strategy, Test Plans, 4-Quadrant Cases, Charters, Waivers, Bug Reports |
-| **Container Runners** | `src/cli/containers.js` | Isolated rootless Podman execution for Stryker mutation and k6 load testing |
+| **Container Runners** | `src/cli/containers.js` | Isolated container execution (Podman/Docker/Host) for k6 performance load testing |
 | **AI Quality Pack** | `src/cli/ai-pack.js` | 4 AI skills, Promptfoo/DeepEval scaffolds, OTel trace auditor, and dataset generation |
 | **AST & Regex Auditor** | `src/cli/auditor.js` | Linter enforcing consumer 6-layer architecture, `MATE-ANTI-01..08` (catches raw `page.locator()` / `page.getBy*()`), and DIP |
 | **Spec Validator** | `src/cli/validator.js` | Validates consumer `specs/*.mate-spec.md` with remediation-injecting `[SELF-CORRECTION][GATE-02]` errors |
@@ -38,7 +38,7 @@
 3. **LF Line Endings:** `bin/mate-sdt.js` and all CLI scripts must strictly use **LF** line endings.
 4. **Safety Guardrails:** Block destructive commands (`rm -rf`, `git push --force`, `git reset --hard`, `DROP TABLE`) via `src/cli/gc.js`.
 5. **Consumer Separation:** Never confuse this repository with a consumer testing project. Consumer rules (POM, 6-layer architecture, 4-quadrant test cases, `.mate/exec-plans/active/`) are generated into consumer repositories via `installer.js` and tested via `tests/cli.test.js`.
-6. **Container Isolation:** Always use rootless **Podman** (never Docker) for mutation testing (`Stryker`) and performance testing (`k6`).
+6. **Container Isolation:** Use **Podman** or **Docker** for performance testing (`k6`).
 7. **Verification Mandate:** Always run `npm run build` and `npm test` after any code change before concluding your turn.
 
 ---

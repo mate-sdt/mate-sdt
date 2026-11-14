@@ -76,7 +76,7 @@ Its purpose is to ensure that any software project implements a quality architec
 | **`mate-pw-codegen`** | **Pillar A (CLI Codegen)** | Translating `playwright-cli` locators, `state-save` auth, and `route` network mocks into SOLID Page/Component Objects and running/debugging Playwright specs. | `mate-assert-playwright` + `mate-pw-recon` |
 | **`mate-pw-forensics`** | **Pillar T/E & Triage (CLI)** | Multi-actor sessions (`-s=actor1`, `-s=actor2`), `tracing-start`/`stop`, 60fps `video-start` recordings, and PR/Jira visual attachments. | `mate-threat` + `mate-explore` + `mate-triage` |
 | **`mate-assert-api`** | **Pillar A (API Contracts)** | Translating OpenAPI/Swagger or spec contracts into typed `BaseApiClient` classes and schema/status/auth matrices. | `mate-model` + `mate-threat` |
-| **`mate-threat`** | **Pillar T (Chaos & Mutation)** | Concurrency, race conditions, idempotency, fuzzing, and Stryker Mutation (`>= 85%`) in container sandbox / host (`npx mate-sdt mutate`). | `mate-pw-forensics` + `mate-assert-api` |
+| **`mate-threat`** | **Pillar T (Chaos & Threats)** | Concurrency, race conditions, idempotency, payload fuzzing, BOLA, and network faults (`tests/threats/`). | `mate-pw-forensics` + `mate-assert-api` |
 | **`mate-performance-k6`** | **Pillar A/T (NFR - k6)** | Translating `<performance_oracles>` SLAs into Grafana k6 scripts executed in container sandbox / native host (`npx mate-sdt k6`). | `mate-model` + `mate-threat` |
 | **`mate-explore`** | **Pillar E (Explore)** | Human SBTM exploratory charters (`npx mate-sdt charter`), WCAG 2.1 AA audits, Release Waivers (`npx mate-sdt waiver`), and Release Verdicts. | `mate-pw-forensics` + `mate-triage` |
 | **`mate-triage`** | **Day-2 Operations** | Classifying CI or live test failures (Real Bug vs. Flaky vs. Env vs. Drift) and generating spec-linked Bug Reports (`npx mate-sdt bug`). | `mate-pw-forensics` + `mate-maintenance` |
@@ -122,7 +122,6 @@ project-root/
 │   ├── mocks/                   <-- Reusable Network Route Mocks
 │   ├── fixtures/                <-- Dependency Inversion (DIP) Playwright fixtures
 │   └── models/                  <-- Strict TypeScript types and schemas
-└── stryker.config.json          <-- Mutation testing governance (>=85% threshold)
 ```
 
 ---

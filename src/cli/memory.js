@@ -187,8 +187,8 @@ const PROCEDURAL_PLAYBOOK_TEMPLATE = [
   '## Custom Locator Strategies (Shadow DOM / Iframes)',
   '- [TBD] Document any non-standard locator strategies required by this application.',
   '',
-  '## Podman Network Bridges (Stryker / k6)',
-  '- [TBD] Document the rootless Podman network flags needed to reach the system under test.',
+  '## Container Network Bridges (k6)',
+  '- [TBD] Document the container network flags needed to reach the system under test.',
   '',
 ].join('\n');
 

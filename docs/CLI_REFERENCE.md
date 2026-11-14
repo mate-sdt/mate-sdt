@@ -43,7 +43,7 @@ npx mate-sdt install [options]
 ---
 
 ### 2. `init [target-dir]`
-Quickly scaffolds the standard M.A.T.E. folders, `MATE-PROJECT-MAP.md`, `docs/TEST-STRATEGY.md`, `specs/TEMPLATE_MATE_SPEC.md`, and `stryker.config.json` without prompting for IDE rules.
+Quickly scaffolds the standard M.A.T.E. folders, `MATE-PROJECT-MAP.md`, `docs/TEST-STRATEGY.md`, and `specs/TEMPLATE_MATE_SPEC.md` without prompting for IDE rules.
 
 ```bash
 npx mate-sdt init
@@ -154,17 +154,7 @@ Returns exit code `1` if any `CRITICAL` anti-pattern (`MATE-ANTI-01` arbitrary s
 
 ---
 
-### 5. `mutate [project-dir]`
-Executes **Stryker Mutator** inside an ephemeral container sandbox (**Podman** or **Docker**) or natively on host, mounting the project directory to `/app:Z` (in Podman) and enforcing a `>= 85%` Mutation Score. Supports `--runtime <podman|docker|none>`.
-
-```bash
-npx mate-sdt mutate
-npx mate-sdt mutate --runtime docker
-```
-
----
-
-### 6. `k6 [script-path]`
+### 5. `k6 [script-path]`
 Executes a **Grafana k6** performance test script inside an ephemeral container sandbox (**Podman** or **Docker**) or natively on host, validating `<performance_oracles>` SLAs. Supports `--runtime <podman|docker|none>`.
 
 ```bash

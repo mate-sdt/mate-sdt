@@ -89,16 +89,12 @@ stateDiagram-v2
 ---
 
 <threat_scenarios>
-## 3. 💣 T — Threat & Trash (Adversarial Engineering & Mutation Governance)
+## 3. 💣 T — Threat & Trash (Adversarial Engineering, Concurrency & Fuzzing)
 
 ### Adversarial & Edge-Case Scenarios
 - **`THR-01` (Concurrency / Double-Click Race Condition):** Two identical requests dispatched within `50ms` with the same `idempotency_key` must resolve idempotently, creating a single record and returning the same status without duplicate side effects.
 - **`THR-02` (Data Trash & Payload Fuzzing):** Injecting 10,000-character strings, XSS/SQLi payloads, negative numbers, and non-UTF8 sequences must be rejected cleanly with `HTTP 422 Unprocessable Entity` and zero stack-trace leakage.
 - **`THR-03` (Downstream Dependency Failure):** If an external gateway times out (`> 5000ms`) or returns `HTTP 503`, the system must trip its circuit breaker and preserve database consistency.
-
-### Mutation Testing Governance
-- **Engine:** Stryker Mutator executed inside an isolated rootless **Podman** container (`npx mate-sdt mutate`).
-- **Threshold:** **Mutation Score >= 85%** (Break threshold: `85%`). Surviving mutants in core business logic block release.
 </threat_scenarios>
 
 ---
@@ -120,7 +116,7 @@ stateDiagram-v2
 ## 🚦 Official M.A.T.E. Release Verdict
 
 <release_decision>
-- [ ] **`[PASS]`**: 100% of invariants green, Mutation Score >= 85%, and Exploratory Charters completed with zero blockers.
+- [ ] **`[PASS]`**: 100% of invariants green, Threat suites verified, and Exploratory Charters completed with zero blockers.
 - [ ] **`[CONCERNS]`**: Non-critical deviation identified. Requires a formal signed Release Waiver (`npx mate-sdt waiver <module>`).
   - *Waiver File / Issue ID:* `[specs/waivers/WVR-YYYY-module.md / ISSUE-123]`
   - *Quality Lead Signature:* `[@handle]` | *Tech Lead Signature:* `[@handle]`

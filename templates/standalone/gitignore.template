@@ -34,8 +34,7 @@ playwright/.auth/
 .mate/context-pack-*.md
 .mate/*.har
 
-# Mutation, Coverage & AI Evals Temp Files
-stryker-tmp/
+# Coverage & AI Evals Temp Files
 coverage/
 .nyc_output/
 .promptfoo/

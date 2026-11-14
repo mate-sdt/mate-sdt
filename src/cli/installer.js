@@ -150,22 +150,6 @@ function initMateProject(targetDir, options = {}) {
     }
   }
 
-  // Copy stryker.config.json
-  if (mode !== 'skills-only') {
-    const strykerSrc = path.join(
-      PACKAGE_ROOT,
-      'skills',
-      'mate-threat',
-      'resources',
-      'stryker.config.json'
-    );
-    const strykerDest = path.join(resolved, 'stryker.config.json');
-    if (!fs.existsSync(strykerDest) && fs.existsSync(strykerSrc)) {
-      fs.copyFileSync(strykerSrc, strykerDest);
-      created.push('stryker.config.json');
-    }
-  }
-
   // Optional starter files (Golden sample spec + SOLID Playwright UI/API + k6 templates)
   if (includeStarterFiles && mode !== 'skills-only') {
     const sampleSpecSrc = path.join(
@@ -383,7 +367,6 @@ function ensureGitignore(targetDir) {
         '.mate/*.har',
         '',
         '# Temp Files',
-        'stryker-tmp/',
         'coverage/',
         '.promptfoo/',
         '',
@@ -416,7 +399,6 @@ function ensureGitignore(targetDir) {
     '.mate/harness-state.json',
     '.mate/context-pack-*.md',
     '.mate/*.har',
-    'stryker-tmp/',
     '.promptfoo/',
   ];
 
@@ -572,7 +554,6 @@ function installMate(options = {}) {
 function checkStatus(targetDir = '.') {
   const resolved = path.resolve(targetDir);
   const hasProjectMap = fs.existsSync(path.join(resolved, 'MATE-PROJECT-MAP.md'));
-  const hasStrykerConfig = fs.existsSync(path.join(resolved, 'stryker.config.json'));
   const hasSpecsDir = fs.existsSync(path.join(resolved, 'specs'));
   const hasAntigravitySkills = fs.existsSync(
     path.join(resolved, '.agents', 'skills', 'mate-core', 'SKILL.md')
@@ -677,7 +658,6 @@ function checkStatus(targetDir = '.') {
   return {
     targetDir: resolved,
     hasProjectMap,
-    hasStrykerConfig,
     hasSpecsDir,
     hasAntigravitySkills,
     hasClaudeCommands,
@@ -788,8 +768,6 @@ module.exports = {
   runHarnessGate,
   resolveContainerRuntime,
   saveContainerConfig,
-  runContainerMutation,
   runContainerK6,
-  runPodmanMutation,
   runPodmanK6,
 };

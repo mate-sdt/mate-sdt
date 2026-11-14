@@ -64,27 +64,6 @@ function saveContainerConfig(targetDir = '.', runtime = 'podman') {
   return safeRuntime;
 }
 
-function handleMutationExit(status) {
-  if (status === 0) {
-    console.log(
-      color(
-        '\n✅ [Pillar T Passed] Mutation Score meets the >= 85% M.A.T.E. threshold!',
-        COLORS.brightGreen,
-        COLORS.bold
-      )
-    );
-  } else {
-    console.error(
-      color(
-        '\n❌ [Pillar T Failed] Mutation testing failed or score fell below the 85% M.A.T.E. threshold.',
-        COLORS.red,
-        COLORS.bold
-      )
-    );
-  }
-  return status ?? 1;
-}
-
 function handleK6Exit(status) {
   if (status === 0) {
     console.log(
@@ -104,107 +83,6 @@ function handleK6Exit(status) {
     );
   }
   return status ?? 1;
-}
-
-/**
- * Runs Stryker mutation testing inside an isolated container sandbox (Podman, Docker, or native host)
- */
-function runContainerMutation(targetDir = '.', configFile = 'stryker.config.json') {
-  const resolved = path.resolve(targetDir);
-  const runtime = resolveContainerRuntime(resolved);
-
-  console.log(
-    color(
-      '\n💣 [M.A.T.E. Pillar T] Launching Mutation Testing Suite...',
-      COLORS.bold,
-      COLORS.brightGreen
-    )
-  );
-  console.log(`   📁 Target Project:   ${resolved}`);
-  console.log(`   ⚙️  Config File:      ${configFile}`);
-  console.log(`   🐳 Container Engine: ${runtime.toUpperCase()}\n`);
-
-  if (runtime === 'podman') {
-    const check = spawnSync('podman', ['--version'], { encoding: 'utf8' });
-    if (check.status !== 0) {
-      console.error(
-        color(
-          "❌ Error: 'podman' is configured as your container runtime, but it was not found in PATH.",
-          COLORS.red,
-          COLORS.bold
-        )
-      );
-      return 1;
-    }
-
-    console.log(color(`   🐳 Podman Version: ${check.stdout.trim()}`, COLORS.cyan));
-
-    const podmanArgs = [
-      'run',
-      '--rm',
-      '-v',
-      `${resolved}:/app:Z`,
-      '-w',
-      '/app',
-      'node:20-alpine',
-      'sh',
-      '-c',
-      `npm install --legacy-peer-deps && npx stryker run ${configFile}`,
-    ];
-
-    console.log(color(`   🚀 Executing: podman ${podmanArgs.join(' ')}\n`, COLORS.gray));
-    const run = spawnSync('podman', podmanArgs, { stdio: 'inherit' });
-    return handleMutationExit(run.status);
-  }
-
-  if (runtime === 'docker') {
-    const check = spawnSync('docker', ['--version'], { encoding: 'utf8' });
-    if (check.status !== 0) {
-      console.error(
-        color(
-          "❌ Error: 'docker' is configured as your container runtime, but it was not found in PATH or the Docker daemon is not running.",
-          COLORS.red,
-          COLORS.bold
-        )
-      );
-      return 1;
-    }
-
-    console.log(color(`   🐳 Docker Version: ${check.stdout.trim()}`, COLORS.cyan));
-
-    const dockerArgs = [
-      'run',
-      '--rm',
-      '-v',
-      `${resolved}:/app`,
-      '-w',
-      '/app',
-      'node:20-alpine',
-      'sh',
-      '-c',
-      `npm install --legacy-peer-deps && npx stryker run ${configFile}`,
-    ];
-
-    console.log(color(`   🚀 Executing: docker ${dockerArgs.join(' ')}\n`, COLORS.gray));
-    const run = spawnSync('docker', dockerArgs, { stdio: 'inherit' });
-    return handleMutationExit(run.status);
-  }
-
-  // Runtime is 'none': execute natively on host
-  console.log(
-    color(
-      '   ℹ️  No container sandbox configured ("none"). Executing Stryker natively on host system...',
-      COLORS.yellow
-    )
-  );
-  const npxCmd = process.platform === 'win32' ? 'npx.cmd' : 'npx';
-  console.log(color(`   🚀 Executing: npx stryker run ${configFile}\n`, COLORS.gray));
-  const run = spawnSync(npxCmd, ['stryker', 'run', configFile], {
-    cwd: resolved,
-    stdio: 'inherit',
-    shell: process.platform === 'win32',
-  });
-  return handleMutationExit(run.status);
 }
 
 /**
@@ -338,9 +216,7 @@ function runContainerK6(scriptPath = 'tests/nfr/order-load.k6.js', targetDir = '
 module.exports = {
   resolveContainerRuntime,
   saveContainerConfig,
-  runContainerMutation,
   runContainerK6,
-  // Backward-compatible aliases
-  runPodmanMutation: runContainerMutation,
+  // Backward-compatible alias
   runPodmanK6: runContainerK6,
 };

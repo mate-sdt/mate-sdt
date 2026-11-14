@@ -50,7 +50,7 @@ Must define adversarial scenarios identified with `THR-XX` codes:
 *   Concurrency & double-click race conditions (`< 50ms` window).
 *   Webhook/event idempotency under network retry storms.
 *   Data trash, boundary payloads, and injection fuzzing (`HTTP 422` expected, never `HTTP 500`).
-*   Stryker Mutation Testing threshold (`>= 85%` inside container sandbox).
+*   Grafana k6 SLA thresholds (`tests/nfr/*.k6.js`).
 
 ### Block 4: `<exploratory_charters> ... </exploratory_charters>` (Pillar E)
 Must define at least one time-boxed human exploratory mission (30–60 minutes) covering:

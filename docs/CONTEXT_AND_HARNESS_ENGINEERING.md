@@ -88,7 +88,7 @@ sequenceDiagram
 4. **Closed-Loop Verification & Self-Correction (`npx mate-sdt gate`):**
    Runs all 4 deterministic gates in a single pass and emits machine-actionable `[SELF-CORRECTION]` instructions (plus `--json` output) so the agent repairs its own mistakes before ending its turn.
 5. **Durable State Persistence & Container Sandboxing (`.mate/harness-state.json` & Container Runtime):**
-   Persists verification state on disk across sessions and isolates destructive mutation (`Stryker`) and load testing (`Grafana k6`) inside ephemeral container sandboxes (using rootless Podman by default).
+   Persists verification state on disk across sessions and isolates load testing (`Grafana k6`) inside ephemeral container sandboxes (using rootless Podman by default).
 
 ### CLI Tooling for Harness Engineering:
 ```bash

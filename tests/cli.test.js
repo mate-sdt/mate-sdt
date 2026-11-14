@@ -142,7 +142,6 @@ describe('M.A.T.E. SDT Framework CLI, 9 Skills, 5 Workflows & Auditor Suite', ()
       assert.ok(fs.existsSync(path.join(tmpDir, 'specs', 'sample-order-lifecycle.mate-spec.md')));
       assert.ok(fs.existsSync(path.join(tmpDir, 'docs', 'test-cases', 'TC-sample-order-lifecycle.md')));
       assert.ok(fs.existsSync(path.join(tmpDir, 'docs', 'test-cases', 'TC-sample-order-lifecycle.csv')));
-      assert.ok(fs.existsSync(path.join(tmpDir, 'stryker.config.json')));
       assert.ok(fs.existsSync(path.join(tmpDir, 'src', 'pages', 'base.page.ts')));
       assert.ok(fs.existsSync(path.join(tmpDir, 'src', 'components', 'notification-toast.component.ts')));
       assert.ok(fs.existsSync(path.join(tmpDir, 'src', 'api', 'base-api.client.ts')));
@@ -893,7 +892,6 @@ describe('M.A.T.E. Stack-Trace Entry Point & Spec-Guarded Self-Healing', () => {
       assert.ok(content.includes('.playwright-cli/'));
       assert.ok(content.includes('*.auth-state.json'));
       assert.ok(content.includes('.mate/sessions/'));
-      assert.ok(content.includes('stryker-tmp/'));
       assert.ok(content.includes('.promptfoo/'));
 
       // 2. Existing .gitignore with custom user entries gets missing entries appended cleanly

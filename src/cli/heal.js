@@ -54,7 +54,7 @@ function classifyFailureSignature(cleanLog) {
   if (/TimeoutError|Timed out \d+ms|waiting for locator|waiting for selector/i.test(cleanLog)) return 'LOCATOR_TIMEOUT';
   if (/HTTP\s+[45]\d{2}\b|status\s+(?:code\s+)?[45]\d{2}\b|ECONNREFUSED|schema mismatch/i.test(cleanLog)) return 'HTTP_CONTRACT_ERROR';
   if (/TS\d{4}|TypeError:|Cannot find module|fixture|is not a function/i.test(cleanLog)) return 'DIP_FIXTURE_OR_TYPE_ERROR';
-  if (/podman|stryker|k6|EACCES|ENOENT|container/i.test(cleanLog)) return 'CONTAINER_OR_INFRA_ERROR';
+  if (/podman|docker|k6|EACCES|ENOENT|container/i.test(cleanLog)) return 'CONTAINER_OR_INFRA_ERROR';
   if (/expect\(.*\)\.|AssertionError|Expected:|Received:/i.test(cleanLog)) return 'ASSERTION_MISMATCH';
   return 'ASSERTION_MISMATCH';
 }

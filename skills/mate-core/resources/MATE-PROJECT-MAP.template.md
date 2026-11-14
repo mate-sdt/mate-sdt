@@ -13,7 +13,6 @@ This living document is the **single source of truth** for AI coding agents and 
 - **UI / E2E Framework:** `Playwright (@playwright/test)`
 - **API / Contract Framework:** `Playwright APIRequestContext / SuperTest`
 - **Performance / NFR Engine:** `Grafana k6 (via npx mate-sdt k6: Podman, Docker, or native host)`
-- **Mutation Testing Engine:** `Stryker Mutator (via npx mate-sdt mutate: Podman, Docker, or native host, threshold >= 85%)`
 - **Environments:**
   - `local / dev`: `http://localhost:3000` (Max k6 VUs: `50`)
   - `staging`: `https://staging.example.com` (Max k6 VUs: `500`)
@@ -87,7 +86,6 @@ Non-negotiable mathematical and business rules that must never be violated under
 
 - **Latest Release Verdict:** `[PASS]` | Sprint: `Sprint-01` | Date: `YYYY-MM-DD`
 - **Test Suite Health Score:** `A` (verified via `npx mate-sdt audit`)
-- **Mutation Testing Score:** `87.5%` (Stryker Mutator via `npx mate-sdt mutate`, threshold `>= 85%`)
 - **Active Release Waivers:** `None` (`./specs/waivers/`)
 - **Identified Gaps & Flakiness Radar:**
   - *None recorded yet. (`mate-triage` and `mate-maintenance` append discovered gaps here).*

@@ -49,7 +49,7 @@ When explaining or applying M.A.T.E., always emphasize its **5 Foundational Prin
 1. **The 4 Pillars (`M.A.T.E.`):**
    - **M — Model (`mate-model`):** Model intent, Finite State Machines, and **Explicit Forbidden Transitions** in `specs/[module].mate-spec.md`.
    - **A — Assert (`mate-assert-playwright` & `mate-assert-api`):** OOP & SOLID test architecture (`BasePage`, `BaseComponent`, `BaseApiClient`, `test.extend` DIP fixtures, **zero `waitForTimeout`**).
-   - **T — Threat & Trash (`mate-threat` & `mate-performance-k6`):** Multi-actor concurrency, idempotency, payload fuzzing, k6 SLAs, and Stryker Mutation (`>= 85%`) inside isolated container sandboxes (Podman/Docker) or host.
+   - **T — Threat & Trash (`mate-threat` & `mate-performance-k6`):** Multi-actor concurrency, idempotency, payload fuzzing, and k6 SLAs inside isolated container sandboxes (Podman/Docker) or host.
    - **E — Explore (`mate-explore`):** Human Session-Based Test Management (SBTM) charters, WCAG 2.1 AA accessibility, and formal Release Verdicts (`PASS`, `CONCERNS` + Waiver, `FAIL`).
 2. **Pragmatic Automation vs. Manual vs. Exploratory (`mate-story-testcases`):**
    - **Not everything should be automated!** When given a User Story, M.A.T.E. classifies every scenario into:
@@ -83,7 +83,6 @@ When explaining or applying M.A.T.E., always emphasize its **5 Foundational Prin
 | `npx mate-sdt cases <module>` | Generates the QA Companion Test Case Matrix (`docs/test-cases/TC-<module>.md` & `.csv` with Automated, Manual & Exploratory sections). |
 | `npx mate-sdt validate [path]` | Validates `*.mate-spec.md` files (enforcing YAML frontmatter, 4 XML blocks, Forbidden Transitions, and `INV-XX` IDs). |
 | `npx mate-sdt audit [dir]` | Scans test code for anti-patterns (`waitForTimeout`, `.only`, DIP violations) and computes Health Score (`A`–`F`). |
-| `npx mate-sdt mutate [dir]` | Runs Stryker Mutator (`>= 85%`) inside a container sandbox (Podman, Docker, or native host). |
 | `npx mate-sdt k6 [script]` | Runs Grafana k6 performance suite inside a container sandbox (Podman, Docker, or native host). |
 | `npx mate-sdt charter <module>` | Generates a human Exploratory Testing Charter (SBTM) in `tests/charters/`. |
 | `npx mate-sdt bug <module>` | Generates a Spec-Linked Bug Report in `docs/bugs/`. |

@@ -1,6 +1,6 @@
 # 🌐 M.A.T.E. Polyglot Stack Reference (Java & Python Adapters)
 
-While the default opinionated stack of `mate-sdt` is **TypeScript + Playwright + Grafana k6 + Stryker Mutator**, the M.A.T.E. Spec-Driven Testing (SDT) methodology is 100% language-agnostic at the specification layer (`specs/*.mate-spec.md` and `MATE-PROJECT-MAP.md`).
+While the default opinionated stack of `mate-sdt` is **TypeScript + Playwright + Grafana k6**, the M.A.T.E. Spec-Driven Testing (SDT) methodology is 100% language-agnostic at the specification layer (`specs/*.mate-spec.md` and `MATE-PROJECT-MAP.md`).
 
 Use this reference when applying M.A.T.E. in **Java** or **Python** enterprise repositories.
 

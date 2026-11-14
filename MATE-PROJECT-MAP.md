@@ -8,7 +8,7 @@ This Living Architecture Map indexes the **`mate-sdt`** repository itself (`< 3,
 ## 1. Repository Stack & Governance
 - **Runtime:** Native Node.js `>= 18` (`node:fs`, `node:path`, `node:readline`, `node:child_process`, `node:os`) — **ZERO production dependencies**.
 - **Test & Build Gate:** `npm run build` (`node scripts/build-check.js`) & `npm test` (`node --test tests/cli.test.js`).
-- **Containers:** Rootless **Podman** (Stryker mutation testing & Grafana k6).
+- **Containers:** Container sandbox (**Podman** or **Docker**) for Grafana k6 performance testing.
 
 ---
 

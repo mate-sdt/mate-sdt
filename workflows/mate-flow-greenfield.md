@@ -2,7 +2,7 @@
 name: mate-flow-greenfield
 description: >-
   End-to-End M.A.T.E. Greenfield Workflow: Orchestrates a new feature from initial idea
-  to validated MATE-SPEC.md, SOLID Playwright/API test generation, Container Sandboxed Mutation Testing (>=85%),
+  to validated MATE-SPEC.md, SOLID Playwright/API test generation, Adversarial Threat & Chaos Verification,
   and Human Exploratory Charter sign-off.
 ---
 
@@ -51,13 +51,13 @@ Execute this step-by-step workflow when building or testing a new feature from s
    npx mate-sdt audit
    ```
 
-## Step 4: Pillar T — Adversarial Threats & Mutation Testing (`mate-threat`)
+## Step 4: Pillar T — Adversarial Threats & Chaos Testing (`mate-threat`)
 1. Implement concurrency, double-click idempotency, and payload fuzzing suites in `tests/threats/`.
-2. Execute Stryker Mutation Testing via the container runner:
+2. Run the adversarial threat suite:
    ```bash
-   npx mate-sdt mutate
+   npx playwright test tests/threats/
    ```
-3. Verify that the **Mutation Score is `>= 85%`**. If mutants survive, strengthen test assertions until the threshold passes.
+3. Verify that all race conditions, injection attempts, and boundary attacks are properly mitigated and rejected by business invariants.
 
 ## Step 5: Pillar E — Human Exploration & Release Verdict (`mate-explore`)
 1. Generate a time-boxed Session-Based Test Management (SBTM) charter:

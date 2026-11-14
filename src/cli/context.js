@@ -268,11 +268,11 @@ const PHASES = {
   },
   threat: {
     skills: ['mate-threat'],
-    rules: ['Every threat scenario references STRIDE + an executable invariant or security assertion.', 'Rootless Podman for Stryker mutation testing (>= 85% mutation score threshold).'],
-    tools: ['npx mate-sdt mutate', 'npx playwright test --project=threats'],
+    rules: ['Every threat scenario references STRIDE + concurrency, idempotency, or security/fuzzing assertions.'],
+    tools: ['npx playwright test --project=threats'],
     blocks: ['threat_scenarios', 'invariants'],
     fewshots: ['threat-idempotency'],
-    outputSchema: '`tests/threats/*.spec.ts` + updated `stryker.config.json`.',
+    outputSchema: '`tests/threats/*.spec.ts`.',
   },
   performance: {
     skills: ['mate-performance-k6'],
