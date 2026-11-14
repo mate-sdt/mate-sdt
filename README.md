@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](./LICENSE)
 [![Node.js >= 18](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen?style=flat-square)](https://nodejs.org)
 [![Mutation Threshold](https://img.shields.io/badge/Stryker_Mutation-%3E%3D85%25-orange?style=flat-square)](https://stryker-mutator.io/)
-[![Container Engine](https://img.shields.io/badge/Sandbox-Rootless_Podman-892ca0?style=flat-square)](https://podman.io/)
+[![Container Engine](https://img.shields.io/badge/Sandbox-Podman_%7C_Docker_%7C_Host-892ca0?style=flat-square)](#-cli-commands-reference)
 
 > *"AI-generated implementation code is ephemeral and disposable.  
 > The specification, deterministic oracles, and human critical thinking are the only permanent assets of software engineering."*  
@@ -25,7 +25,7 @@ npx mate-sdt install
 Or run non-interactively with default settings across your favorite AI coding agents (and optionally install `@playwright/cli` + `@playwright/test`):
 
 ```bash
-npx mate-sdt install --yes --with-playwright-cli --ide antigravity,claude,cursor,windsurf,copilot,codex
+npx mate-sdt install --yes --with-playwright-cli --container podman --ide antigravity,claude,cursor,windsurf,copilot,codex
 ```
 
 ---
@@ -53,18 +53,16 @@ In the Agentic Era (2026+), autonomous AI agents write thousands of lines of cod
 
 ## 🏛️ The 4 Pillars of M.A.T.E.
 
-```mermaid
-flowchart LR
-    M["🗺️ M — Model<br/>Intent, FSM & Forbidden Transitions"] --> A["🎯 A — Assert<br/>SOLID UI/API & Sacred Invariants"]
-    A --> T["💣 T — Threat & Trash<br/>Concurrency, k6 SLAs & >=85% Mutation"]
-    T --> E["🧭 E — Explore<br/>Human SBTM Charters & Release Verdict"]
+```text
+🗺️ M — Model ───▶ 🎯 A — Assert ───▶ 💣 T — Threat & Trash ───▶ 🧭 E — Explore
+(Intent & FSM)    (SOLID Invariants)   (Chaos & Mutation)       (Human Charters)
 ```
 
 | Pillar | Name | Core Responsibility | Key Artifact / Enforcement |
 | :---: | :--- | :--- | :--- |
 | **M** | **Model** | Eradicate ambiguity before code exists. Model Finite State Machines (FSM), **Explicit Forbidden Transitions**, strict contracts, and Live Page Reconnaissance (`page-explorer`). | `specs/[module].mate-spec.md` (`<intent_model>`) |
 | **A** | **Assert** | Translate deterministic business invariants into OOP/SOLID Playwright UI & API suites (`BasePage`, `ComponentObject`, `BaseApiClient`, Dependency Inversion fixtures, **zero arbitrary sleeps**). | `specs/[module].mate-spec.md` (`<invariants>`) + `src/pages/`, `src/api/`, `src/fixtures/` |
-| **T** | **Threat & Trash** | Shatter the happy-path illusion: race conditions, double-click idempotency, payload fuzzing, **k6 Performance SLAs**, and **Stryker Mutation Testing (>= 85%)** inside isolated container sandboxes (using rootless **Podman** by default). | `specs/[module].mate-spec.md` (`<threat_scenarios>`) + `stryker.config.json` + `tests/nfr/*.k6.js` |
+| **T** | **Threat & Trash** | Shatter the happy-path illusion: race conditions, double-click idempotency, payload fuzzing, **k6 Performance SLAs**, and **Stryker Mutation Testing (>= 85%)** inside isolated container sandboxes (**Podman** or **Docker**, or natively on host). | `specs/[module].mate-spec.md` (`<threat_scenarios>`) + `stryker.config.json` + `tests/nfr/*.k6.js` |
 | **E** | **Explore** | Safeguard human quality via Session-Based Test Management (SBTM) charters (ergonomics, WCAG 2.1 AA accessibility, trust) and issue the formal release verdict: `PASS`, `CONCERNS` (with signed waiver), or `FAIL`. | `tests/charters/CHR-*.md` & `specs/waivers/WVR-*.md` |
 
 ---
@@ -88,7 +86,7 @@ When you run `npx mate-sdt install`, your AI agents gain **16 core specialized s
 | **`mate-pw-forensics`** | **Pillar T/E & Triage (CLI)** | Multi-actor sessions (`playwright-cli -s=actor1`, `-s=actor2`), `tracing-start`/`stop`, 60fps `video-start` recordings with chapters, and PR/Jira visual attachments. |
 | **`mate-assert-api`** | **Pillar A (API)** | Generates OpenAPI/Swagger or network-observed contract test matrices (`2xx`, `400/422`, `401/403` BOLA, `409` FSM) and typed API clients. |
 | **`mate-threat`** | **Pillar T (Chaos)** | Dual-mode Pillar T: Black-Box concurrency, idempotency & payload fuzzing (`tests/threats/`), plus White-Box Stryker Mutation (`>= 85%`) inside container sandboxes. |
-| **`mate-performance-k6`** | **Pillar A/T (NFR)** | Designs Smoke, Load, Stress, Spike, and Soak profiles in Grafana k6 enforcing `<performance_oracles>` in Podman. |
+| **`mate-performance-k6`** | **Pillar A/T (NFR)** | Designs Smoke, Load, Stress, Spike, and Soak profiles in Grafana k6 enforcing `<performance_oracles>` across Podman, Docker, or native host. |
 | **`mate-explore`** | **Pillar E** | Designs human SBTM exploratory charters, WCAG 2.1 AA audits, Release Waivers, and Release Verdicts. |
 | **`mate-triage`** | **Day-2 Ops** | Triages failures (`Real Bug` vs `Flaky` vs `Infra` vs `Drift`), tracks `test.fail()` known bugs, and generates spec-linked Bug Reports (`npx mate-sdt bug`). |
 | **`mate-maintenance`** | **Day-2 Ops** | Audits test codebase health (`A`–`F`), detecting `waitForTimeout`/sleeps, `.only` locks, and DIP violations (`npx mate-sdt audit`). |
@@ -98,10 +96,10 @@ When you run `npx mate-sdt install`, your AI agents gain **16 core specialized s
 | :--- | :--- |
 | **`/mate-flow-zero-to-one`** | **Zero Testing + Live App in Prod (Standalone QA Folder)** ➔ Global Live Recon (`mate-pw-recon`) ➔ `TEST-STRATEGY.md` & Risk Matrix (`mate-strategy`) ➔ **Wave 1: 72h P0 Smoke Shield** ➔ **Wave 2: 4-Quadrant Deepening** |
 | **`/mate-flow-user-story`** | **User Story (Jira/Notion MCP, Excel/CSV, or Text)** ➔ Spec & 4-Quadrant Test Cases (`.md` + `.csv`) ➔ Live Verification with `playwright-cli` (`mate-pw-recon`) ➔ SOLID Automation (`mate-pw-codegen` + `mate-assert-playwright`) ➔ Anti-Greenwashing Report (`test.fail()` + `BUG-*.md`) |
-| **`/mate-flow-greenfield`** | Idea/Requirement ➔ `*.mate-spec.md` ➔ `validate` ➔ UI/API SOLID Tests ➔ Podman Mutation (`>=85%`) ➔ Human Charter & Verdict |
+| **`/mate-flow-greenfield`** | Idea/Requirement ➔ `*.mate-spec.md` ➔ `validate` ➔ UI/API SOLID Tests ➔ Container / Host Mutation (`>=85%`) ➔ Human Charter & Verdict |
 | **`/mate-flow-brownfield`** | Legacy Code / Live URL Recon (`mate-pw-recon`) ➔ `MATE-PROJECT-MAP.md` ➔ Reverse-Spec (`REVIEW`) ➔ Freeze P0 Invariants |
 | **`/mate-flow-api-contract`** | OpenAPI/Swagger ➔ Contract Spec & Forbidden Transitions ➔ Typed `BaseApiClient` + Contract & Fuzzing Suite |
-| **`/mate-flow-performance`** | `<performance_oracles>` SLAs ➔ k6 Load Profile Design ➔ Rootless Podman Execution (`npx mate-sdt k6`) |
+| **`/mate-flow-performance`** | `<performance_oracles>` SLAs ➔ k6 Load Profile Design ➔ Container (Podman/Docker) or Host Execution (`npx mate-sdt k6`) |
 | **`/mate-flow-triage`** | CI Failure Logs ➔ Root-Cause Triage (`mate-pw-forensics` + `mate-triage`) ➔ Spec-Linked Bug Report (`npx mate-sdt bug`) or Suite Refactor (`npx mate-sdt audit`) |
 | **`/mate-flow-ai-agent`** *(On-Demand AI Pack)* | **Socratic 5-Dimension Dataset Discovery & 5-Seed Approval** (`mate-ai-dataset`) ➔ **Promptfoo & DeepEval Dual-Engine Evals** (`mate-ai-evals`) ➔ **OWASP LLM Red Teaming** (`mate-ai-redteam`) ➔ **OpenTelemetry / Langfuse / Phoenix Trace Forensics** (`mate-ai-observability`) |
 
@@ -163,7 +161,7 @@ your-project/
 
 | Command | Description |
 | :--- | :--- |
-| `npx mate-sdt install` | Launch the interactive installer (choose Greenfield/Brownfield mode, target AI IDEs, starter templates, and `@playwright/cli` installation). |
+| `npx mate-sdt install` | Launch the interactive installer (choose Greenfield/Brownfield mode, target AI IDEs, container sandbox runtime [Podman/Docker/None], starter templates, and Playwright CLI setup). |
 | `npx mate-sdt init [dir]` | Quickly scaffold the M.A.T.E. directory structure, `MATE-PROJECT-MAP.md`, and `stryker.config.json`. |
 | `npx mate-sdt setup-playwright [dir]` | Install `@playwright/cli@latest` and `@playwright/test@latest` in the target project and configure `.gitignore`. |
 | `npx mate-sdt setup-ai [dir]` | Install the on-demand **AI Agent, Chatbot & RAG Quality Pack** (4 AI Skills, `/mate-flow-ai-agent`, Promptfoo, DeepEval & OTel Trace Auditor). |
@@ -173,17 +171,17 @@ your-project/
 | `npx mate-sdt validate [path]` | Lint one or all `*.mate-spec.md` files (verifies YAML frontmatter, 4 XML blocks, explicit Forbidden Transitions, and `INV-XX` IDs). |
 | `npx mate-sdt context [module]` | Audit Context Engineering, compact stale sessions (`--compact`), consolidate `[OBSERVED]` facts (`--consolidate`), and build the 3-Bucket / 7-Layer JIT Context Pack. |
 | `npx mate-sdt session <action>` | Manage the ephemeral Session Workbench (`start\|event\|advance\|show\|list\|prune`) with TTL, $K=5$ rolling compaction, and `mate.handoff/v1` Black-Box Handoffs. |
-| `npx mate-sdt gate [dir] [--loop]` | Execute the **5-Gate Harness Engineering Closed Verification Loop** (validates Context, Specs & Test-Design-First, Anti-Greenwashing, SOLID, and Podman; `--loop` runs up to 5 iterations, persisting `.mate/harness-state.json`). |
+| `npx mate-sdt gate [dir] [--loop]` | Execute the **5-Gate Harness Engineering Closed Verification Loop** (validates Context, Specs & Test-Design-First, Anti-Greenwashing, SOLID, and Container Sandbox / Mutator; `--loop` runs up to 5 iterations, persisting `.mate/harness-state.json`). |
 | `npx mate-sdt gc [dir]` | Run Continuous Entropy & Doc-Gardening GC, generate `docs/QUALITY_SCORE.md`, and update `.mate/exec-plans/tech-debt-tracker.md`. |
 | `npx mate-sdt heal [target]` | Compress raw stack traces (`<error_digest> <= 400t`), map governing spec, and guide the 5-Class Heal vs. Quarantine loop. |
 | `npx mate-sdt cases <module>` | Generate a 4-Quadrant QA Companion Test Case Matrix (`docs/test-cases/TC-<module>.md` & `.csv` with Automated, Manual & Exploratory sections). |
 | `npx mate-sdt audit [dir]` | Scan test codebase for M.A.T.E. anti-patterns (`waitForTimeout`, `sleep`, `.only`, DIP violations) and compute Health Score (`A`–`F`). |
-| `npx mate-sdt mutate [dir]` | Execute Stryker Mutator inside an isolated container sandbox (using rootless **Podman** by default) enforcing the `>= 85%` mutation score threshold. |
-| `npx mate-sdt k6 [script]` | Execute Grafana k6 performance suite inside an isolated container sandbox (using rootless **Podman** by default) validating `<performance_oracles>`. |
+| `npx mate-sdt mutate [dir]` | Execute Stryker Mutator inside an isolated container sandbox (**Podman** or **Docker**) or natively on host, enforcing the `>= 85%` mutation score threshold. |
+| `npx mate-sdt k6 [script]` | Execute Grafana k6 performance suite inside an isolated container sandbox (**Podman** or **Docker**) or natively on host, validating `<performance_oracles>`. |
 | `npx mate-sdt charter <module>` | Generate a timestamped human Exploratory Testing Charter (SBTM) in `tests/charters/`. |
 | `npx mate-sdt bug <module>` | Generate a Structured Bug Report linked to broken spec invariants in `docs/bugs/`. |
 | `npx mate-sdt waiver <module>` | Generate a Formal Release Waiver in `specs/waivers/` when a release verdict is `[CONCERNS]`. |
-| `npx mate-sdt status [dir]` | Run a complete governance audit (checks Living Map, IDE skills, spec validity, Health Score, and container runtime availability). |
+| `npx mate-sdt status [dir]` | Run a complete governance audit (checks Living Map, IDE skills, spec validity, Health Score, and container runtime availability [Podman/Docker/None]). |
 
 ---
 
